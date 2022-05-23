@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:projectairquality/views/air_quality/air_quality.dart';
 
 class MainMenu extends StatelessWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -118,35 +120,40 @@ class MainMenu extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2.2,
-                      height: MediaQuery.of(context).size.height / 8,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.water_drop,
-                                  color: Colors.white,
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => AirQuality());
+                      },
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 2.2,
+                        height: MediaQuery.of(context).size.height / 8,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.water_drop,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              'Kualitas Udara',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            )
-                          ],
+                              Text(
+                                'Kualitas Udara',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
