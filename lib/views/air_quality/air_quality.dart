@@ -19,7 +19,7 @@ class _AirQualityState extends State<AirQuality> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Air Quality'),
+        title: const Text('Air Quality'),
         centerTitle: true,
       ),
       body: GoogleMap(

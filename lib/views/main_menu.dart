@@ -122,7 +122,7 @@ class MainMenu extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => AirQuality());
+                        Get.to(() => const AirQuality());
                       },
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width / 2.2,
