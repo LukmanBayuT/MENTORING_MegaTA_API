@@ -11,6 +11,8 @@ class SPlashScreen extends StatelessWidget {
       body: GestureDetector(
         onTap: () {
           Get.to(() => const Onboarding());
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => Onboarding()));
         },
         child: Container(
           width: MediaQuery.of(context).size.width,

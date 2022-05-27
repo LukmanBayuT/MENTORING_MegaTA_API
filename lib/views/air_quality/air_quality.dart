@@ -96,15 +96,14 @@ class _AirQualityState extends State<AirQuality> {
         },
         markers: {
           Marker(
-              visible: true,
-              markerId: const MarkerId('Kecamatan Tandes'),
-              position: const LatLng(-7.2570035, 112.6732605),
-              infoWindow: InfoWindow(
-                  title: 'Kecamatan Tandes',
-                  snippet: 'Kualitas Air Pada Daerah ini adalah $kecTandes'),
-              icon: BitmapDescriptor.defaultMarkerWithHue(
-                  BitmapDescriptor.hueRed),
-              onTap: () {}),
+            visible: true,
+            markerId: const MarkerId('Kecamatan Tandes'),
+            position: const LatLng(-7.2570035, 112.6732605),
+            infoWindow: InfoWindow(
+                title: 'Kecamatan Tandes', snippet: 'ISPU = $kecTandes'),
+            icon:
+                BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          ),
           Marker(
             markerId: const MarkerId('Kecamatan Asemworo'),
             position: const LatLng(-7.2388207, 112.6714753),
