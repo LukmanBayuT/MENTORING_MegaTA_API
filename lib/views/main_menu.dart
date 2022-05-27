@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:projectairquality/services/api_services.dart';
 import 'package:projectairquality/views/air_quality/air_quality.dart';
 
-class MainMenu extends StatelessWidget {
+class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
+
+  @override
+  State<MainMenu> createState() => _MainMenuState();
+}
+
+class _MainMenuState extends State<MainMenu> {
+  @override
+  void initState() {
+    ApiServicesAirQuality().fetchDataTandes();
+    ApiServicesAirQuality().fetchDataAsemworo();
+    ApiServicesAirQuality().fetchDataSukomanunggal();
+    ApiServicesAirQuality().fetchDataBenowo();
+    ApiServicesAirQuality().fetchDataLakarsantri();
+    ApiServicesAirQuality().fetchDataPakal();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
