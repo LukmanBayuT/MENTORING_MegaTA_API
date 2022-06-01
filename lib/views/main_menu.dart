@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projectairquality/services/api_services.dart';
 import 'package:projectairquality/views/air_quality/air_quality.dart';
+import 'package:projectairquality/views/laporan/laporan_kebakaran.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _MainMenuState extends State<MainMenu> {
     ApiServicesAirQuality().fetchDataBenowo();
     ApiServicesAirQuality().fetchDataLakarsantri();
     ApiServicesAirQuality().fetchDataPakal();
+    ApiServicesAirQuality().fetchDataSambikerep();
     super.initState();
   }
 
@@ -177,48 +179,53 @@ class _MainMenuState extends State<MainMenu> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2.2,
-                      height: MediaQuery.of(context).size.height / 8,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Colors.greenAccent,
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.report,
-                                  color: Colors.white,
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const LaporanKebakaran());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 2.2,
+                        height: MediaQuery.of(context).size.height / 8,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    color: Colors.greenAccent,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.report,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(
-                              'Laporan',
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            )
-                          ],
+                              Text(
+                                'Laporan',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2.2,
-                      height: MediaQuery.of(context).size.height / 8,
-                    ),
-                  ],
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 2.2,
+                        height: MediaQuery.of(context).size.height / 8,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:projectairquality/services/secure_storage.dart';
-import 'package:projectairquality/views/aq_details.dart';
+import 'package:projectairquality/views/air_quality/aq_details.dart';
 
 class AirQuality extends StatefulWidget {
   const AirQuality({Key? key}) : super(key: key);
@@ -23,41 +23,70 @@ class _AirQualityState extends State<AirQuality> {
   CameraPosition initialCameraPosition = const CameraPosition(
       zoom: 12, tilt: 20, target: LatLng(-7.2756141, 112.6426429));
 
-  String? kecTandes;
-  String? kecAsemworo;
-  String? kecSukomanunggal;
-  String? kecBenowo;
-  String? kecLakarsantri;
-  String? kecSambikerep;
-  String? kecPakal;
+  String? kecTan = 'Kecamatan Tandes';
+  String? kecAsem = 'Kecamatan Asemworo';
+  String? kecSuko = 'Kecamatan Sukomanunggal';
+  String? kecBen = 'Kecamatan Benowo';
+  String? kecLakar = 'Kecamatan Lakarsantri';
+  String? kecSambi = 'Kecamatan Sambikerep';
+  String? kecPak = 'Kecamatan Pakal';
+
+  num? kecTandes;
+  num? kecAsemworo;
+  num? kecSukomanunggal;
+  num? kecBenowo;
+  num? kecLakarsantri;
+  num? kecSambikerep;
+  num? kecPakal;
 
   void readTandes() async {
-    kecTandes = await secureStorage.readSecureData('kecTandes');
+    var kecTandesStr = await secureStorage.readSecureData('kecTandes');
+    var kecTandesParse = int.parse(kecTandesStr);
+    kecTandes = kecTandesParse;
     setState(() {});
   }
 
   void readAsemworo() async {
-    kecAsemworo = await secureStorage.readSecureData('kecAsemworo');
+    var kecAsemworoStr = await secureStorage.readSecureData('kecAsemworo');
+    var kecAsemworoParse = int.parse(kecAsemworoStr);
+    kecAsemworo = kecAsemworoParse;
     setState(() {});
   }
 
   void readSukomanunggal() async {
-    kecSukomanunggal = await secureStorage.readSecureData('kecSukomanunggal');
+    var kecSukomanunggalStr =
+        await secureStorage.readSecureData('kecSukomanunggal');
+    var kecSukomanunggalParse = int.parse(kecSukomanunggalStr);
+    kecSukomanunggal = kecSukomanunggalParse;
     setState(() {});
   }
 
   void readBenowo() async {
-    kecBenowo = await secureStorage.readSecureData('kecBenowo');
+    var kecBenowoStr = await secureStorage.readSecureData('kecBenowo');
+    var kecBenowoParseStr = int.parse(kecBenowoStr);
+    kecBenowo = kecBenowoParseStr;
     setState(() {});
   }
 
   void readSambikerep() async {
-    kecSambikerep = await secureStorage.readSecureData('kecSambikerep');
+    var kecSambikerepStr = await secureStorage.readSecureData('kecSambikerep');
+    var kecSambikerepParse = int.parse(kecSambikerepStr);
+    kecSambikerep = kecSambikerepParse;
     setState(() {});
   }
 
   void readPakal() async {
-    kecPakal = await secureStorage.readSecureData('kecPakal');
+    var kecPakalStr = await secureStorage.readSecureData('kecPakal');
+    var kecPakalParse = int.parse(kecPakalStr);
+    kecPakal = kecPakalParse;
+    setState(() {});
+  }
+
+  void readLakarsantri() async {
+    var kecLakarsantriStr =
+        await secureStorage.readSecureData('kecLakarsantri');
+    var kecLakarParse = int.parse(kecLakarsantriStr);
+    kecLakarsantri = kecLakarParse;
     setState(() {});
   }
 
@@ -69,6 +98,7 @@ class _AirQualityState extends State<AirQuality> {
     readBenowo();
     readSambikerep();
     readPakal();
+    readLakarsantri();
     super.initState();
   }
 
@@ -100,7 +130,12 @@ class _AirQualityState extends State<AirQuality> {
             markerId: const MarkerId('Kecamatan Tandes'),
             position: const LatLng(-7.2570035, 112.6732605),
             infoWindow: InfoWindow(
-                title: 'Kecamatan Tandes', snippet: 'ISPU = $kecTandes'),
+                onTap: () {
+                  Get.to(
+                      () => AirQualityDetails(ispu: kecTandes, alamat: kecTan));
+                },
+                title: 'Kecamatan Tandes',
+                snippet: 'ISPU : $kecTandes'),
             icon:
                 BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           ),
@@ -108,53 +143,77 @@ class _AirQualityState extends State<AirQuality> {
             markerId: const MarkerId('Kecamatan Asemworo'),
             position: const LatLng(-7.2388207, 112.6714753),
             infoWindow: InfoWindow(
+                onTap: () {
+                  Get.to(() =>
+                      AirQualityDetails(ispu: kecAsemworo, alamat: kecAsem));
+                },
                 title: 'Kecamatan Asemworo',
-                snippet: 'Kualitas Air Pada Daerah ini adalah $kecAsemworo'),
+                snippet: 'ISPU : $kecAsemworo'),
             icon:
                 BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           ),
           Marker(
             markerId: const MarkerId('Kecamatan Sukomanunggal'),
             position: const LatLng(-7.2704832, 112.6818934),
-            infoWindow: const InfoWindow(
-              title: 'Kecamatan Sukomanunggal',
-            ),
+            infoWindow: InfoWindow(
+                onTap: () {
+                  Get.to(() => AirQualityDetails(
+                      ispu: kecSukomanunggal, alamat: kecSuko));
+                },
+                title: 'Kecamatan Sukomanunggal',
+                snippet: 'ISPU : $kecSukomanunggal'),
             icon:
                 BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           ),
           Marker(
               markerId: const MarkerId('Kecamatan Benowo'),
               position: const LatLng(-7.2285631, 112.6115998),
-              infoWindow: const InfoWindow(
-                title: 'Kecamatan Benowo',
-              ),
+              infoWindow: InfoWindow(
+                  onTap: () {
+                    Get.to(() =>
+                        AirQualityDetails(ispu: kecBenowo, alamat: kecBen));
+                  },
+                  title: 'Kecamatan Benowo',
+                  snippet: 'ISPU : $kecBenowo'),
               icon: BitmapDescriptor.defaultMarkerWithHue(
                   BitmapDescriptor.hueRed),
               onTap: () {}),
           Marker(
             markerId: const MarkerId('Kecamatan Lakarsantri'),
             position: const LatLng(-7.3226681, 112.6178609),
-            infoWindow: const InfoWindow(
-              title: 'Kecamatan Lakarsantri',
-            ),
+            infoWindow: InfoWindow(
+                onTap: () {
+                  Get.to(() => AirQualityDetails(
+                      ispu: kecLakarsantri, alamat: kecLakar));
+                },
+                title: 'Kecamatan Lakarsantri',
+                snippet: 'ISPU : $kecLakarsantri'),
             icon:
                 BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           ),
           Marker(
             markerId: const MarkerId('Kecamatan Sambikerep'),
             position: const LatLng(-7.2751222, 112.6377688),
-            infoWindow: const InfoWindow(
-              title: 'Kecamatan Sambikerep',
-            ),
+            infoWindow: InfoWindow(
+                onTap: () {
+                  Get.to(() =>
+                      AirQualityDetails(ispu: kecSambikerep, alamat: kecSambi));
+                },
+                title: 'Kecamatan Sambikerep',
+                snippet: 'ISPU : $kecSambikerep'),
             icon:
                 BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           ),
           Marker(
             markerId: const MarkerId('Kecamatan Pakal'),
             position: const LatLng(-7.2318214, 112.5427117),
-            infoWindow: const InfoWindow(
-              title: 'Kecamatan Pakal',
-            ),
+            infoWindow: InfoWindow(
+                onTap: () {
+                  Get.to(
+                      () => AirQualityDetails(ispu: kecPakal, alamat: kecPak));
+                },
+                title: 'Kecamatan Pakal',
+                snippet: 'ISPU : $kecPakal'),
             icon:
                 BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
           ),
