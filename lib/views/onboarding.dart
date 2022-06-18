@@ -49,7 +49,7 @@ class Onboarding extends StatelessWidget {
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.5,
-                          height: 50,
+                          height: 40,
                           child: Center(
                             child: Text(
                                 'Dapat memberikan informasi terkait kerusakan jalan di daerah tertentu',
@@ -77,7 +77,7 @@ class Onboarding extends StatelessWidget {
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.5,
-                          height: 50,
+                          height: 40,
                           child: Center(
                             child: Text(
                                 'Dapat memberikan informasi terkait kualitas udara di daerah tertentu',
@@ -105,7 +105,7 @@ class Onboarding extends StatelessWidget {
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.5,
-                          height: 50,
+                          height: 60,
                           child: Center(
                             child: Text(
                                 'User dapat melaporkan jalan yang rusak dengan cara memfoto jalan yang rusak',
@@ -134,7 +134,7 @@ class Onboarding extends StatelessWidget {
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 1.5,
-                          height: 50,
+                          height: 60,
                           child: Center(
                             child: Text(
                               'Admin dapat mengelola data pelaporan user untuk diberikan tanggapan',

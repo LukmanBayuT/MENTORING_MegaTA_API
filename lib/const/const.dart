@@ -20,7 +20,7 @@ var h1b = GoogleFonts.poppins(
 );
 
 var h2b = GoogleFonts.poppins(
-  fontSize: 12,
+  fontSize: 10,
   fontWeight: FontWeight.w500,
   color: Colors.black,
 );
