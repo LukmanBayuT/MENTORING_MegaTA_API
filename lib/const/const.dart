@@ -19,6 +19,12 @@ var h1b = GoogleFonts.poppins(
   color: Colors.black,
 );
 
+var h1bx = GoogleFonts.poppins(
+  fontSize: 18,
+  fontWeight: FontWeight.w600,
+  color: Colors.black,
+);
+
 var h2b = GoogleFonts.poppins(
   fontSize: 10,
   fontWeight: FontWeight.w500,
@@ -27,3 +33,5 @@ var h2b = GoogleFonts.poppins(
 
 var roundedrec =
     RoundedRectangleBorder(borderRadius: BorderRadius.circular(20));
+
+const unguKeren = Color(0xff020227);

@@ -4,8 +4,9 @@ import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:projectairquality/services/secure_storage.dart';
-import 'package:projectairquality/views/air_quality/aq_details.dart';
+
+import '../../services/secure_storage.dart';
+import 'aq_details.dart';
 
 class AirQuality extends StatefulWidget {
   const AirQuality({Key? key}) : super(key: key);
@@ -15,29 +16,60 @@ class AirQuality extends StatefulWidget {
 }
 
 class _AirQualityState extends State<AirQuality> {
+  CameraPosition initialCameraPosition = const CameraPosition(
+      zoom: 12, tilt: 20, target: LatLng(-7.2756141, 112.6426429));
+
+  String? kecAsem = 'Kecamatan Asemworo';
+  num? kecAsemworo;
+  String? kecBen = 'Kecamatan Benowo';
+  num? kecBenowo;
+  String? kecLakar = 'Kecamatan Lakarsantri';
+  num? kecLakarsantri;
+  String? kecPak = 'Kecamatan Pakal';
+  num? kecPakal;
+  String? kecSambi = 'Kecamatan Sambikerep';
+  num? kecSambikerep;
+  String? kecSuko = 'Kecamatan Sukomanunggal';
+  num? kecSukomanunggal;
+  String? kecTan = 'Kecamatan Tandes';
+  num? kecTandes;
+  String? latAsm = '-7.2388207';
+  String? latBen = '-7.2285631';
+  String? latLak = '-7.3226681';
+  String? latPak = '-7.2318214';
+  String? latSam = '-7.2751222';
+  String? latSuko = '-7.2704832';
+  String? latTan = '-7.2570032';
+  String? longAsm = '112.6714753';
+  String? longBen = '112.6115998';
+  String? longLak = '112.6178609';
+  String? longPak = '112.5427117';
+  String? longSam = '112.6377688';
+  String? longSuko = '112.6818934';
+  String? longTan = '112.6557509';
   SecureStorage secureStorage = SecureStorage();
+
   final Completer<GoogleMapController> _controller = Completer();
   final CustomInfoWindowController _customInfoWindowController =
       CustomInfoWindowController();
 
-  CameraPosition initialCameraPosition = const CameraPosition(
-      zoom: 12, tilt: 20, target: LatLng(-7.2756141, 112.6426429));
+  @override
+  void dispose() {
+    _customInfoWindowController.dispose();
+    super.dispose();
+  }
 
-  String? kecTan = 'Kecamatan Tandes';
-  String? kecAsem = 'Kecamatan Asemworo';
-  String? kecSuko = 'Kecamatan Sukomanunggal';
-  String? kecBen = 'Kecamatan Benowo';
-  String? kecLakar = 'Kecamatan Lakarsantri';
-  String? kecSambi = 'Kecamatan Sambikerep';
-  String? kecPak = 'Kecamatan Pakal';
-
-  num? kecTandes;
-  num? kecAsemworo;
-  num? kecSukomanunggal;
-  num? kecBenowo;
-  num? kecLakarsantri;
-  num? kecSambikerep;
-  num? kecPakal;
+  @override
+  void initState() {
+    readTandes();
+    readAsemworo();
+    readSukomanunggal();
+    readBenowo();
+    readSambikerep();
+    readPakal();
+    readLakarsantri();
+    super.initState();
+  }
 
   void readTandes() async {
     var kecTandesStr = await secureStorage.readSecureData('kecTandes');
@@ -91,24 +123,6 @@ class _AirQualityState extends State<AirQuality> {
   }
 
   @override
-  void initState() {
-    readTandes();
-    readAsemworo();
-    readSukomanunggal();
-    readBenowo();
-    readSambikerep();
-    readPakal();
-    readLakarsantri();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _customInfoWindowController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -131,8 +145,12 @@ class _AirQualityState extends State<AirQuality> {
             position: const LatLng(-7.2570035, 112.6732605),
             infoWindow: InfoWindow(
                 onTap: () {
-                  Get.to(
-                      () => AirQualityDetails(ispu: kecTandes, alamat: kecTan));
+                  Get.to(() => AirQualityDetails(
+                        ispu: kecTandes,
+                        alamat: kecTan,
+                        lat: latTan,
+                        long: longTan,
+                      ));
                 },
                 title: 'Kecamatan Tandes',
                 snippet: 'ISPU : $kecTandes'),
@@ -144,8 +162,12 @@ class _AirQualityState extends State<AirQuality> {
             position: const LatLng(-7.2388207, 112.6714753),
             infoWindow: InfoWindow(
                 onTap: () {
-                  Get.to(() =>
-                      AirQualityDetails(ispu: kecAsemworo, alamat: kecAsem));
+                  Get.to(() => AirQualityDetails(
+                        ispu: kecAsemworo,
+                        alamat: kecAsem,
+                        lat: latAsm,
+                        long: longAsm,
+                      ));
                 },
                 title: 'Kecamatan Asemworo',
                 snippet: 'ISPU : $kecAsemworo'),
@@ -158,7 +180,11 @@ class _AirQualityState extends State<AirQuality> {
             infoWindow: InfoWindow(
                 onTap: () {
                   Get.to(() => AirQualityDetails(
-                      ispu: kecSukomanunggal, alamat: kecSuko));
+                        ispu: kecSukomanunggal,
+                        alamat: kecSuko,
+                        lat: latSuko,
+                        long: longSuko,
+                      ));
                 },
                 title: 'Kecamatan Sukomanunggal',
                 snippet: 'ISPU : $kecSukomanunggal'),
@@ -170,8 +196,12 @@ class _AirQualityState extends State<AirQuality> {
               position: const LatLng(-7.2285631, 112.6115998),
               infoWindow: InfoWindow(
                   onTap: () {
-                    Get.to(() =>
-                        AirQualityDetails(ispu: kecBenowo, alamat: kecBen));
+                    Get.to(() => AirQualityDetails(
+                          ispu: kecBenowo,
+                          alamat: kecBen,
+                          lat: latBen,
+                          long: longBen,
+                        ));
                   },
                   title: 'Kecamatan Benowo',
                   snippet: 'ISPU : $kecBenowo'),
@@ -184,7 +214,11 @@ class _AirQualityState extends State<AirQuality> {
             infoWindow: InfoWindow(
                 onTap: () {
                   Get.to(() => AirQualityDetails(
-                      ispu: kecLakarsantri, alamat: kecLakar));
+                        ispu: kecLakarsantri,
+                        alamat: kecLakar,
+                        lat: latLak,
+                        long: longLak,
+                      ));
                 },
                 title: 'Kecamatan Lakarsantri',
                 snippet: 'ISPU : $kecLakarsantri'),
@@ -196,8 +230,12 @@ class _AirQualityState extends State<AirQuality> {
             position: const LatLng(-7.2751222, 112.6377688),
             infoWindow: InfoWindow(
                 onTap: () {
-                  Get.to(() =>
-                      AirQualityDetails(ispu: kecSambikerep, alamat: kecSambi));
+                  Get.to(() => AirQualityDetails(
+                        ispu: kecSambikerep,
+                        alamat: kecSambi,
+                        lat: latSam,
+                        long: longSam,
+                      ));
                 },
                 title: 'Kecamatan Sambikerep',
                 snippet: 'ISPU : $kecSambikerep'),
@@ -209,8 +247,12 @@ class _AirQualityState extends State<AirQuality> {
             position: const LatLng(-7.2318214, 112.5427117),
             infoWindow: InfoWindow(
                 onTap: () {
-                  Get.to(
-                      () => AirQualityDetails(ispu: kecPakal, alamat: kecPak));
+                  Get.to(() => AirQualityDetails(
+                        ispu: kecPakal,
+                        alamat: kecPak,
+                        lat: latPak,
+                        long: longPak,
+                      ));
                 },
                 title: 'Kecamatan Pakal',
                 snippet: 'ISPU : $kecPakal'),

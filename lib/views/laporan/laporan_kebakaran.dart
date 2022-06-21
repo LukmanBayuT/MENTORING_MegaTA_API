@@ -260,7 +260,7 @@ class _LaporanKebakaranState extends State<LaporanKebakaran> {
   }
 
   void goToFinish() {
-    Future.delayed(Duration(seconds: 3))
+    Future.delayed(const Duration(seconds: 3))
         .then((value) => Get.to(() => const FinishedPage()));
     setState(() {
       isLoading = false;

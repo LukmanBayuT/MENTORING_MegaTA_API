@@ -183,129 +183,33 @@ class Beranda extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: Get.height / 1.25,
-      //! nambahin scroll slider disini
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: Get.width,
-            height: Get.height / 4,
-            child: CarouselSlider(
-              items: items,
-              options: CarouselOptions(
-                autoPlay: true,
-                aspectRatio: 2.0,
-                enlargeCenterPage: true,
-                enlargeStrategy: CenterPageEnlargeStrategy.height,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: Get.width,
+              height: Get.height / 4,
+              child: CarouselSlider(
+                items: items,
+                options: CarouselOptions(
+                  autoPlay: true,
+                  aspectRatio: 2.0,
+                  enlargeCenterPage: true,
+                  enlargeStrategy: CenterPageEnlargeStrategy.height,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              'Fitur',
-              style: GoogleFonts.poppins(
-                  fontSize: 18, fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                'Fitur',
+                style: GoogleFonts.poppins(
+                    fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                  width: Get.width / 2.2,
-                  height: Get.height / 10,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: const Center(
-                            child: Icon(
-                              Icons.warning,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        SizedBox(
-                          width: Get.width / 4,
-                          child: Text(
-                            'Kerusakan Jalan',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => const AirQuality());
-                  },
-                  child: SizedBox(
-                    width: Get.width / 2.2,
-                    height: Get.height / 10,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(5)),
-                            child: const Center(
-                              child: Icon(
-                                Icons.water_drop,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'Kualitas Udara',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => const LaporanKebakaran());
-            },
-            child: Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -326,11 +230,11 @@ class Beranda extends StatelessWidget {
                             width: 30,
                             height: 30,
                             decoration: BoxDecoration(
-                                color: Colors.greenAccent,
+                                color: Colors.amber,
                                 borderRadius: BorderRadius.circular(5)),
                             child: const Center(
                               child: Icon(
-                                Icons.report,
+                                Icons.warning,
                                 color: Colors.white,
                               ),
                             ),
@@ -338,63 +242,166 @@ class Beranda extends StatelessWidget {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            'Laporan',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600,
+                          SizedBox(
+                            width: Get.width / 4,
+                            child: Text(
+                              'Kerusakan Jalan',
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           )
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 2.2,
-                    height: MediaQuery.of(context).size.height / 8,
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const AirQuality());
+                    },
+                    child: SizedBox(
+                      width: Get.width / 2.2,
+                      height: Get.height / 10,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.water_drop,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Kualitas Udara',
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              'Berita Populer',
-              style: GoogleFonts.poppins(
-                  fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Card(
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const LaporanKebakaran());
+              },
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Image.asset('assets/exnews.png'),
-                    const SizedBox(
-                      width: 10,
+                    SizedBox(
+                      width: Get.width / 2.2,
+                      height: Get.height / 10,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.greenAccent,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.report,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Laporan',
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Berita Title',
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.bold)),
-                        Text('Berita Description',
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.normal)),
-                        Text('Berita Tanggal',
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.normal)),
-                      ],
-                    )
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.2,
+                      height: MediaQuery.of(context).size.height / 8,
+                    ),
                   ],
                 ),
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(
+                'Berita Populer',
+                style: GoogleFonts.poppins(
+                    fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              width: Get.width,
+              height: Get.height / 4,
+              child: ListView.builder(
+                itemCount: 3,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Image.asset('assets/exnews.png'),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Berita Title',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold)),
+                              Text('Berita Description',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.normal)),
+                              Text('Berita Tanggal',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.normal)),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,10 +1,44 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:projectairquality/model/model_kecamatan.dart';
 import 'package:projectairquality/services/secure_storage.dart';
 
 class ApiServicesAirQuality {
   SecureStorage secureStorage = SecureStorage();
+
+  Future<Kecamatan> fetchDataAll(String lat, long) async {
+    var allResponse = await http.get(Uri.parse(
+        'https://api.weatherbit.io/v2.0/current/airquality?lat=$lat&lon=$long&key=0220a374f93244ebb6ab6ce81b77803f'));
+    var output1 = allResponse.body;
+    Map<String, dynamic> allResponseJson = jsonDecode(output1);
+    var data = allResponseJson['data'][0];
+    var pm25 = data['pm25'].toString().substring(0, 2);
+    var pm10 = data['pm10'].toString().substring(0, 2);
+    var no2 = data['no2'].toString().substring(0, 2);
+    var so2 = data['so2'].toString().substring(0, 2);
+    var co = data['co'].toString().substring(0, 2);
+    var o3 = data['o3'].toString().substring(0, 2);
+
+    secureStorage.writeSecureData('pm25', pm25);
+    secureStorage.writeSecureData('pm10', pm10);
+    secureStorage.writeSecureData('no2', no2);
+    secureStorage.writeSecureData('so2', so2);
+    secureStorage.writeSecureData('co', co);
+    secureStorage.writeSecureData('o3', o3);
+
+    if (kDebugMode) {
+      print(allResponseJson);
+      print(pm25);
+      print(pm10);
+      print(no2);
+      print(so2);
+      print(co);
+      print(o3);
+    }
+    return kecamatanFromJson(allResponse.body);
+  }
+
   Future<Kecamatan> fetchDataTandes() async {
     var kecamatanTandesResponse = await http.get(Uri.parse(
         'https://api.weatherbit.io/v2.0/current/airquality?lat=-7.2570032&lon=112.6557509&key=0220a374f93244ebb6ab6ce81b77803f'));
@@ -52,7 +86,6 @@ class ApiServicesAirQuality {
     var output1 = kecamatanLakarsantriResponse.body;
     Map<String, dynamic> kecLakarsantriJson = jsonDecode(output1);
     var kecLakarsantriAqi = kecLakarsantriJson['data'][0]['aqi'];
-    print(kecLakarsantriAqi);
     secureStorage.writeSecureData(
         'kecLakarsantri', kecLakarsantriAqi.toString());
     return kecamatanFromJson(kecamatanLakarsantriResponse.body);
