@@ -7,14 +7,14 @@ import 'package:place_picker/place_picker.dart';
 import 'package:projectairquality/const/const.dart';
 import 'package:projectairquality/views/laporan/finished_page.dart';
 
-class LaporanKebakaran extends StatefulWidget {
-  const LaporanKebakaran({Key? key}) : super(key: key);
+class LaporanKebakaranSub extends StatefulWidget {
+  const LaporanKebakaranSub({Key? key}) : super(key: key);
 
   @override
-  State<LaporanKebakaran> createState() => _LaporanKebakaranState();
+  State<LaporanKebakaranSub> createState() => _LaporanKebakaranSubState();
 }
 
-class _LaporanKebakaranState extends State<LaporanKebakaran> {
+class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
   bool isLoading = false;
 
   String? alamat;

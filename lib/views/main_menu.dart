@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projectairquality/const/const.dart';
 import 'package:projectairquality/services/api_services.dart';
+import 'package:projectairquality/services/api_services_news.dart';
+import 'package:projectairquality/services/api_temperature.dart';
 import 'package:projectairquality/views/air_quality/air_quality.dart';
-import 'package:projectairquality/views/laporan/laporan_kebakaran.dart';
+import 'package:projectairquality/views/laporan/laporan_list.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class _MainMenuState extends State<MainMenu> {
     ApiServicesAirQuality().fetchDataLakarsantri();
     ApiServicesAirQuality().fetchDataPakal();
     ApiServicesAirQuality().fetchDataSambikerep();
+    ApiTemperature().getTemp();
     super.initState();
   }
 
@@ -303,7 +306,8 @@ class Beranda extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Get.to(() => const LaporanKebakaran());
+                // Get.to(() => const LaporanKebakaran());
+                Get.to(() => const LaporanList());
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -367,36 +371,64 @@ class Beranda extends StatelessWidget {
             SizedBox(
               width: Get.width,
               height: Get.height / 4,
-              child: ListView.builder(
-                itemCount: 3,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Image.asset('assets/exnews.png'),
-                          const SizedBox(
-                            width: 10,
+              child: FutureBuilder(
+                future: GetNewsApi().getNews(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  var articles = snapshot.data.articles;
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return ListView.builder(
+                      itemCount: articles.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                    width: Get.width / 4,
+                                    child: Image.network(
+                                        articles[index].urlToImage)),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: Get.width * 0.6,
+                                      child: Text(articles[index].title,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    SizedBox(
+                                      width: Get.width * 0.6,
+                                      height: Get.height / 13,
+                                      child: Text(articles[index].description,
+                                          overflow: TextOverflow.clip,
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.normal)),
+                                    ),
+                                    // SizedBox(
+                                    //   width: Get.width * 0.6,
+                                    //   height: Get.height / 13,
+                                    //   child: Text(articles[index].publishedAt,
+                                    //       style: GoogleFonts.poppins(
+                                    //           fontWeight: FontWeight.normal)),
+                                    // ),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Berita Title',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold)),
-                              Text('Berita Description',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.normal)),
-                              Text('Berita Tanggal',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.normal)),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  );
+                        );
+                      },
+                    );
+                  }
                 },
               ),
             ),

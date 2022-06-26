@@ -478,19 +478,34 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
   int? o3;
 
   getData() async {
-    pm25 = int.parse(await secureStorage.readSecureData('pm25'));
-    pm10 = int.parse(await secureStorage.readSecureData('pm10'));
-    no2 = int.parse(await secureStorage.readSecureData('no2'));
-    so2 = int.parse(await secureStorage.readSecureData('so2'));
-    co = int.parse(await secureStorage.readSecureData('co'));
-    o3 = int.parse(await secureStorage.readSecureData('o3'));
+    setState(() async {
+      pm25 = int.parse(await secureStorage.readSecureData('pm25'));
+      pm10 = int.parse(await secureStorage.readSecureData('pm10'));
+      no2 = int.parse(await secureStorage.readSecureData('no2'));
+      so2 = int.parse(await secureStorage.readSecureData('so2'));
+      co = int.parse(await secureStorage.readSecureData('co'));
+      o3 = int.parse(await secureStorage.readSecureData('o3'));
+    });
   }
 
   @override
   void initState() {
+    implementData();
     ApiServicesAirQuality().fetchDataAll(widget.lat!, widget.long!);
     getData();
     super.initState();
+  }
+
+  String? tempIni;
+  String? windIni;
+  String? humIni;
+
+  implementData() async {
+    setState(() async {
+      tempIni = await secureStorage.readSecureData('temp');
+      windIni = await secureStorage.readSecureData('wind');
+      humIni = await secureStorage.readSecureData('hum');
+    });
   }
 
   @override
@@ -664,7 +679,11 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       var details = snapshot.data;
                       var detailsData = details.data[0];
-                      if (snapshot.data != null) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
                         return SingleChildScrollView(
                           child: Column(
                             children: [
@@ -737,10 +756,7 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
                                                                 .spaceEvenly,
                                                         children: [
                                                           Text(
-                                                            detailsData.co
-                                                                .toString()
-                                                                .substring(
-                                                                    0, 2),
+                                                            tempIni ?? '30',
                                                             style: h1w,
                                                           ),
                                                           Container(
@@ -751,7 +767,7 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
                                                             color: Colors.white,
                                                           ),
                                                           Text(
-                                                            'CO',
+                                                            '\u2103',
                                                             style: h1w,
                                                           ),
                                                         ],
@@ -769,15 +785,75 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
                                 ),
                               ),
                               SizedBox(
-                                width: Get.width / 1.1,
-                                height: Get.height / 13,
-                                child: Card(
-                                  shape: roundedrec,
-                                  child: Row(
-                                    children: [],
-                                  ),
-                                ),
-                              ),
+                                  width: Get.width / 1.1,
+                                  height: Get.height / 13,
+                                  child: Card(
+                                    shape: roundedrec,
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Image.asset(
+                                                'assets/icons/udara.png'),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text(
+                                                  'Kelembaban',
+                                                  style: h1b.copyWith(
+                                                      fontSize: 15),
+                                                ),
+                                                Text(humIni.toString()),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          height: 40,
+                                          width: 3,
+                                          color: Colors.grey,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Image.asset(
+                                                'assets/icons/lembab.png'),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text(
+                                                  'Udara',
+                                                  style: h1b.copyWith(
+                                                      fontSize: 15),
+                                                ),
+                                                Text(windIni.toString()),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )),
                               SizedBox(
                                 width: Get.width / 1.1,
                                 height: Get.height / 2.5,
@@ -794,10 +870,6 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
                               )
                             ],
                           ),
-                        );
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
                         );
                       }
                     },
