@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:projectairquality/model/laporan_model.dart';
+import 'package:projectairquality/const/const.dart';
+import 'package:projectairquality/views/laporan/laporan_kebakaran.dart';
 
 class LaporanList extends StatefulWidget {
   const LaporanList({Key? key}) : super(key: key);
@@ -10,17 +13,7 @@ class LaporanList extends StatefulWidget {
 }
 
 class _LaporanListState extends State<LaporanList> {
-  List<LaporanKebakaran> listLaporan = <LaporanKebakaran>[];
-
-  submitLaporan() {
-    listLaporan.add(LaporanKebakaran(
-      namaTempat: 'harters',
-      reason: 'hartete',
-      gambar: 'hargee',
-    ));
-    setState(() {});
-  }
-
+  var db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,19 +23,60 @@ class _LaporanListState extends State<LaporanList> {
           children: [
             SizedBox(
               width: Get.width,
-              height: Get.height / 1.3,
-              child: ListView.builder(
-                itemCount: listLaporan.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: Column(
-                      children: [
-                        Text(listLaporan[index].namaTempat!),
-                        Text(listLaporan[index].reason!),
-                        Text(listLaporan[index].gambar!)
-                      ],
-                    ),
-                  );
+              height: Get.height / 1.2,
+              child: StreamBuilder(
+                stream: db.collection('laporan').snapshots(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return const Text('Snapshot ada Error');
+                  }
+                  //List Data Olah Disini
+                  var _data = snapshot.data!.docs;
+
+                  return ListView.builder(
+                      itemCount: _data.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            width: Get.width,
+                            height: Get.height / 4,
+                            child: Card(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Nama Pelapor',
+                                    style: h1bx,
+                                  ),
+                                  Text(
+                                    _data[index].data()['name'].toString(),
+                                    style: h1b,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    _data[index].data()['tempat'].toString(),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(_data[index]
+                                      .data()['deskripsi']
+                                      .toString()),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      });
                 },
               ),
             ),
@@ -51,9 +85,12 @@ class _LaporanListState extends State<LaporanList> {
               height: Get.height / 15,
               child: ElevatedButton(
                   onPressed: () {
-                    submitLaporan();
+                    Get.to(() => const LaporanKebakaranSub());
                   },
-                  child: const Text('Submit Laporan')),
+                  child: Text(
+                    'Submit Laporan',
+                    style: h1w,
+                  )),
             ),
           ],
         ),

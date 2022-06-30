@@ -18,7 +18,7 @@ class _KelolaPagesState extends State<KelolaPages> {
   final user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: Get.width,
       height: Get.height / 1.3,
       child: Column(

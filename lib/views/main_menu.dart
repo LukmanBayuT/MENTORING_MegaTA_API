@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projectairquality/const/const.dart';
-import 'package:projectairquality/model/api_model_news.dart';
 import 'package:projectairquality/services/api_services.dart';
 import 'package:projectairquality/services/api_services_news.dart';
 import 'package:projectairquality/services/api_temperature.dart';

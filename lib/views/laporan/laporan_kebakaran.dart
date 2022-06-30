@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,6 +18,8 @@ class LaporanKebakaranSub extends StatefulWidget {
 
 class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
   bool isLoading = false;
+
+  final deskripsi = TextEditingController();
 
   String? alamat;
   String? namaTempat;
@@ -197,10 +201,12 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                                         MediaQuery.of(context).size.width / 1.1,
                                     height:
                                         MediaQuery.of(context).size.height / 6,
-                                    child: const Padding(
-                                      padding: EdgeInsets.all(8.0),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
                                       child: TextField(
-                                          decoration: InputDecoration.collapsed(
+                                          controller: deskripsi,
+                                          decoration: const InputDecoration
+                                                  .collapsed(
                                               hintText:
                                                   'Deskripsikan Situasimu')),
                                     ),
@@ -217,7 +223,10 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                               setState(() {
                                 isLoading = true;
                               });
-                              goToFinish();
+                              createLaporan('Mega', deskripsi.text, namaTempat,
+                                      alamat)
+                                  .then((value) => Timer(
+                                      const Duration(seconds: 1), goToFinish));
                             },
                             child: (isLoading == true)
                                 ? const Center(
@@ -226,7 +235,7 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                                   )
                                 : Text(
                                     'Submit',
-                                    style: h1b,
+                                    style: h1w,
                                   ),
                           ),
                         )),
@@ -240,6 +249,18 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                   color: Colors.amber,
                 ),
               ));
+  }
+
+  Future createLaporan(String name, deskripsi, namaTempat, alamat) async {
+    final docLaporan = FirebaseFirestore.instance.collection('laporan').doc();
+    final json = {
+      'name': 'Mega',
+      'tempat': namaTempat,
+      'alamat': alamat,
+      'deskripsi': deskripsi,
+    };
+
+    await docLaporan.set(json);
   }
 
   void showPlacePicker() async {

@@ -46,7 +46,9 @@ class ApiServicesAirQuality {
     Map<String, dynamic> kecTandesJson = jsonDecode(output1);
     var kecTandesAqi = kecTandesJson['data'][0]['aqi`'];
     await secureStorage.writeSecureData('kecTandes', kecTandesAqi.toString());
-    print(kecTandesJson);
+    if (kDebugMode) {
+      print(kecTandesJson);
+    }
     return kecamatanFromJson(kecamatanTandesResponse.body);
   }
 
