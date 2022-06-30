@@ -1,12 +1,16 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:projectairquality/const/const.dart';
+import 'package:projectairquality/model/api_model_news.dart';
 import 'package:projectairquality/services/api_services.dart';
 import 'package:projectairquality/services/api_services_news.dart';
 import 'package:projectairquality/services/api_temperature.dart';
 import 'package:projectairquality/views/air_quality/air_quality.dart';
+import 'package:projectairquality/views/berita/berita_pages.dart';
+import 'package:projectairquality/views/kelola/kelola.dart';
 import 'package:projectairquality/views/laporan/laporan_list.dart';
 
 class MainMenu extends StatefulWidget {
@@ -19,21 +23,23 @@ class MainMenu extends StatefulWidget {
 class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
+    super.initState();
     ApiServicesAirQuality().fetchDataTandes();
     ApiServicesAirQuality().fetchDataAsemworo();
     ApiServicesAirQuality().fetchDataSukomanunggal();
     ApiServicesAirQuality().fetchDataBenowo();
     ApiServicesAirQuality().fetchDataLakarsantri();
-    ApiServicesAirQuality().fetchDataPakal();
     ApiServicesAirQuality().fetchDataSambikerep();
+    ApiServicesAirQuality().fetchDataPakal();
     ApiTemperature().getTemp();
-    super.initState();
   }
 
   int index = 1;
   bool isBerita = false;
   bool isBeranda = true;
   bool isKelola = false;
+
+  final user = FirebaseAuth.instance.currentUser;
 
   List<Widget> items = [
     Card(
@@ -64,6 +70,13 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
+    ApiServicesAirQuality().fetchDataTandes();
+    ApiServicesAirQuality().fetchDataAsemworo();
+    ApiServicesAirQuality().fetchDataSukomanunggal();
+    ApiServicesAirQuality().fetchDataBenowo();
+    ApiServicesAirQuality().fetchDataLakarsantri();
+    ApiServicesAirQuality().fetchDataSambikerep();
+    ApiServicesAirQuality().fetchDataPakal();
     return Scaffold(
         body: SafeArea(
       child: Column(
@@ -168,6 +181,12 @@ class _MainMenuState extends State<MainMenu> {
           (isBeranda == true && isBerita == false && isKelola == false)
               ? Beranda(items: items)
               : Container(),
+          (isBeranda == false && isBerita == false && isKelola == true)
+              ? const KelolaPages()
+              : Container(),
+          (isBeranda == false && isBerita == true && isKelola == false)
+              ? const BeritaPages()
+              : Container(),
         ],
       ),
     ));
@@ -204,12 +223,17 @@ class Beranda extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                'Fitur',
-                style: GoogleFonts.poppins(
-                    fontSize: 18, fontWeight: FontWeight.bold),
+            GestureDetector(
+              onTap: () {
+                ApiServicesAirQuality().fetchDataTandes();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  'Fitur',
+                  style: GoogleFonts.poppins(
+                      fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             Padding(
@@ -306,7 +330,6 @@ class Beranda extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                // Get.to(() => const LaporanKebakaran());
                 Get.to(() => const LaporanList());
               },
               child: Padding(
@@ -413,13 +436,6 @@ class Beranda extends StatelessWidget {
                                           style: GoogleFonts.poppins(
                                               fontWeight: FontWeight.normal)),
                                     ),
-                                    // SizedBox(
-                                    //   width: Get.width * 0.6,
-                                    //   height: Get.height / 13,
-                                    //   child: Text(articles[index].publishedAt,
-                                    //       style: GoogleFonts.poppins(
-                                    //           fontWeight: FontWeight.normal)),
-                                    // ),
                                   ],
                                 )
                               ],
