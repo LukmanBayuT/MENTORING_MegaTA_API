@@ -22,7 +22,7 @@ class BeritaPages extends StatelessWidget {
             );
           } else {
             return ListView.builder(
-              itemCount: articles.length,
+              itemCount: 4,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
                   child: Padding(

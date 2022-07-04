@@ -11,6 +11,7 @@ import 'package:projectairquality/views/air_quality/air_quality.dart';
 import 'package:projectairquality/views/berita/berita_pages.dart';
 import 'package:projectairquality/views/kelola/kelola.dart';
 import 'package:projectairquality/views/laporan/laporan_list.dart';
+import 'package:projectairquality/views/loginsignup/login.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -181,7 +182,7 @@ class _MainMenuState extends State<MainMenu> {
               ? Beranda(items: items)
               : Container(),
           (isBeranda == false && isBerita == false && isKelola == true)
-              ? const KelolaPages()
+              ? LoginPages()
               : Container(),
           (isBeranda == false && isBerita == true && isKelola == false)
               ? const BeritaPages()
