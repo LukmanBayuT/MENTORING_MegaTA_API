@@ -34,7 +34,6 @@ class _LaporanListState extends State<LaporanList> {
                   if (snapshot.hasError) {
                     return const Text('Snapshot ada Error');
                   }
-                  //List Data Olah Disini
                   var _data = snapshot.data!.docs;
 
                   return ListView.builder(

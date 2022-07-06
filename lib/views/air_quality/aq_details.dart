@@ -10,18 +10,30 @@ import '../../model/bar_charts_model.dart';
 import '../../services/api_services.dart';
 
 class AirQualityDetails extends StatefulWidget {
-  AirQualityDetails(
-      {Key? key,
-      required this.ispu,
-      required this.alamat,
-      required this.lat,
-      required this.long})
-      : super(key: key);
+  AirQualityDetails({
+    Key? key,
+    required this.ispu,
+    required this.alamat,
+    required this.lat,
+    required this.long,
+    required this.co,
+    required this.no2,
+    required this.o3,
+    required this.pm10,
+    required this.pm25,
+    required this.so2,
+  }) : super(key: key);
 
   String? alamat;
   num? ispu;
   String? lat;
   String? long;
+  num? co;
+  num? no2;
+  num? o3;
+  num? pm10;
+  num? pm25;
+  num? so2;
 
   @override
   State<AirQualityDetails> createState() => _AirQualityDetailsState();
@@ -477,23 +489,23 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
   int? co;
   int? o3;
 
-  getData() async {
-    setState(() async {
-      pm25 = int.parse(await secureStorage.readSecureData('pm25'));
-      pm10 = int.parse(await secureStorage.readSecureData('pm10'));
-      no2 = int.parse(await secureStorage.readSecureData('no2'));
-      so2 = int.parse(await secureStorage.readSecureData('so2'));
-      co = int.parse(await secureStorage.readSecureData('co'));
-      o3 = int.parse(await secureStorage.readSecureData('o3'));
+  setData() async {
+    setState(() {
+      pm25 = widget.pm25!.toInt();
+      pm10 = widget.pm10!.toInt();
+      no2 = widget.no2!.toInt();
+      so2 = widget.so2!.toInt();
+      co = widget.co!.toInt();
+      o3 = widget.o3!.toInt();
     });
   }
 
   @override
   void initState() {
+    super.initState();
     implementData();
     ApiServicesAirQuality().fetchDataAll(widget.lat!, widget.long!);
-    getData();
-    super.initState();
+    setData();
   }
 
   String? tempIni;
@@ -554,330 +566,362 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('kk:mm:ss \n d MMM').format(now);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          widget.alamat.toString(),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            widget.alamat.toString(),
+          ),
+          centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  isKeterangan = !isKeterangan;
+                  setState(() {});
+                },
+                icon: const Icon(
+                  Icons.info_outline_rounded,
+                  color: Colors.amber,
+                )),
+          ],
         ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                isKeterangan = !isKeterangan;
-                setState(() {});
-              },
-              icon: const Icon(
-                Icons.info_outline_rounded,
-                color: Colors.amber,
-              )),
-        ],
-      ),
-      body: (isKeterangan)
-          ? SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.height),
+        body: (isKeterangan)
+            ? SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height),
+                  child: Column(
+                    children: [
+                      (widget.ispu! <= 50) ? control0(context) : Container(),
+                      (widget.ispu! >= 51 && widget.ispu! < 100)
+                          ? control1(context)
+                          : Container(),
+                      (widget.ispu! > 100 && widget.ispu! < 200)
+                          ? control2(context)
+                          : Container(),
+                      (widget.ispu! > 201 && widget.ispu! < 300)
+                          ? control3(context)
+                          : Container(),
+                      (widget.ispu! >= 301) ? control4(context) : Container(),
+                      (widget.ispu! <= 50) ? const EfekWidget1() : Container(),
+                      (widget.ispu! >= 51 && widget.ispu! < 100)
+                          ? const EfekWidget2()
+                          : Container(),
+                      (widget.ispu! > 100 && widget.ispu! < 200)
+                          ? const EfekWidget3()
+                          : Container(),
+                      (widget.ispu! > 201 && widget.ispu! < 300)
+                          ? const EfekWidget4()
+                          : Container(),
+                      (widget.ispu! >= 301) ? const EfekWidget5() : Container(),
+                      SizedBox(
+                        height: Get.height / 8,
+                        child: CarouselSlider(
+                          items: item0,
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            aspectRatio: 4.0,
+                            enlargeCenterPage: true,
+                            enlargeStrategy: CenterPageEnlargeStrategy.height,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height / 8,
+                        child: CarouselSlider(
+                          items: item1,
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            aspectRatio: 4.0,
+                            enlargeCenterPage: true,
+                            enlargeStrategy: CenterPageEnlargeStrategy.height,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height / 8,
+                        child: CarouselSlider(
+                          items: item2,
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            aspectRatio: 4.0,
+                            enlargeCenterPage: true,
+                            enlargeStrategy: CenterPageEnlargeStrategy.height,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height / 8,
+                        child: CarouselSlider(
+                          items: item3,
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            aspectRatio: 4.0,
+                            enlargeCenterPage: true,
+                            enlargeStrategy: CenterPageEnlargeStrategy.height,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height / 8,
+                        child: CarouselSlider(
+                          items: item4,
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            aspectRatio: 4.0,
+                            enlargeCenterPage: true,
+                            enlargeStrategy: CenterPageEnlargeStrategy.height,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      )
+                    ],
+                  ),
+                ),
+              )
+            : SingleChildScrollView(
                 child: Column(
                   children: [
-                    (widget.ispu! <= 50) ? control0(context) : Container(),
-                    (widget.ispu! >= 51 && widget.ispu! < 100)
-                        ? control1(context)
-                        : Container(),
-                    (widget.ispu! > 100 && widget.ispu! < 200)
-                        ? control2(context)
-                        : Container(),
-                    (widget.ispu! > 201 && widget.ispu! < 300)
-                        ? control3(context)
-                        : Container(),
-                    (widget.ispu! >= 301) ? control4(context) : Container(),
-                    (widget.ispu! <= 50) ? const EfekWidget1() : Container(),
-                    (widget.ispu! >= 51 && widget.ispu! < 100)
-                        ? const EfekWidget2()
-                        : Container(),
-                    (widget.ispu! > 100 && widget.ispu! < 200)
-                        ? const EfekWidget3()
-                        : Container(),
-                    (widget.ispu! > 201 && widget.ispu! < 300)
-                        ? const EfekWidget4()
-                        : Container(),
-                    (widget.ispu! >= 301) ? const EfekWidget5() : Container(),
-                    SizedBox(
-                      height: Get.height / 8,
-                      child: CarouselSlider(
-                        items: item0,
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          aspectRatio: 4.0,
-                          enlargeCenterPage: true,
-                          enlargeStrategy: CenterPageEnlargeStrategy.height,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height / 8,
-                      child: CarouselSlider(
-                        items: item1,
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          aspectRatio: 4.0,
-                          enlargeCenterPage: true,
-                          enlargeStrategy: CenterPageEnlargeStrategy.height,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height / 8,
-                      child: CarouselSlider(
-                        items: item2,
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          aspectRatio: 4.0,
-                          enlargeCenterPage: true,
-                          enlargeStrategy: CenterPageEnlargeStrategy.height,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height / 8,
-                      child: CarouselSlider(
-                        items: item3,
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          aspectRatio: 4.0,
-                          enlargeCenterPage: true,
-                          enlargeStrategy: CenterPageEnlargeStrategy.height,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height / 8,
-                      child: CarouselSlider(
-                        items: item4,
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          aspectRatio: 4.0,
-                          enlargeCenterPage: true,
-                          enlargeStrategy: CenterPageEnlargeStrategy.height,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    )
-                  ],
-                ),
-              ),
-            )
-          : FutureBuilder(
-              future: Future.delayed(const Duration(seconds: 2)),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                return Container(
-                  color: Colors.grey[200],
-                  child: FutureBuilder(
-                    future: ApiServicesAirQuality()
-                        .fetchDataAll(widget.lat!, widget.long!),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      var details = snapshot.data;
-                      var detailsData = details.data[0];
-                      if (!snapshot.hasData) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        return SingleChildScrollView(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: Get.width,
+                        height: Get.height / 3,
+                        child: Card(
+                          shape: roundedrec,
                           child: Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  width: Get.width,
-                                  height: Get.height / 3,
-                                  child: Card(
-                                    shape: roundedrec,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  SizedBox(
+                                    width: Get.width / 2.5,
+                                    height: Get.height / 4,
                                     child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            SizedBox(
-                                              width: Get.width / 2.5,
-                                              height: Get.height / 4,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  SizedBox(
-                                                    width: Get.width / 3,
-                                                    height: Get.height / 8,
-                                                    child: const Card(
-                                                      color: Colors.amber,
-                                                    ),
+                                        (widget.ispu! <= 50)
+                                            ? SizedBox(
+                                                width: Get.width / 3,
+                                                height: Get.height / 8,
+                                                child: Card(
+                                                  child: Center(
+                                                    child: Image.asset(
+                                                        'assets/icons/1.png'),
                                                   ),
-                                                  Text(
-                                                    "Kualitas Udara saat ini",
-                                                    textAlign: TextAlign.center,
-                                                    style: h1bx,
+                                                ),
+                                              )
+                                            : Container(),
+                                        (widget.ispu! >= 51 &&
+                                                widget.ispu! < 100)
+                                            ? SizedBox(
+                                                width: Get.width / 3,
+                                                height: Get.height / 8,
+                                                child: Card(
+                                                  child: Center(
+                                                    child: Image.asset(
+                                                        'assets/icons/2.png'),
                                                   ),
-                                                  Text(
-                                                    detailsData.aqi.toString(),
-                                                    textAlign: TextAlign.center,
-                                                    style: h1b,
+                                                ),
+                                              )
+                                            : Container(),
+                                        (widget.ispu! > 100 &&
+                                                widget.ispu! < 200)
+                                            ? SizedBox(
+                                                width: Get.width / 3,
+                                                height: Get.height / 8,
+                                                child: Card(
+                                                  child: Center(
+                                                    child: Image.asset(
+                                                        'assets/icons/3.png'),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: Get.width / 2.5,
-                                              height: Get.height / 3.5,
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    formattedDate,
-                                                    textAlign: TextAlign.center,
-                                                    style: h1bx,
+                                                ),
+                                              )
+                                            : Container(),
+                                        (widget.ispu! > 201 &&
+                                                widget.ispu! < 300)
+                                            ? SizedBox(
+                                                width: Get.width / 3,
+                                                height: Get.height / 8,
+                                                child: Card(
+                                                  child: Center(
+                                                    child: Image.asset(
+                                                        'assets/icons/4.png'),
                                                   ),
-                                                  Text(
-                                                    details.cityName,
-                                                    textAlign: TextAlign.center,
-                                                    style: h1b,
+                                                ),
+                                              )
+                                            : Container(),
+                                        (widget.ispu! >= 301)
+                                            ? SizedBox(
+                                                width: Get.width / 3,
+                                                height: Get.height / 8,
+                                                child: Card(
+                                                  child: Center(
+                                                    child: Image.asset(
+                                                        'assets/icons/5.png'),
                                                   ),
-                                                  const SizedBox(
-                                                    height: 15,
-                                                  ),
-                                                  SizedBox(
-                                                    width: Get.width / 2.5,
-                                                    height: Get.height / 8,
-                                                    child: Card(
-                                                      color: Colors.greenAccent,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceEvenly,
-                                                        children: [
-                                                          Text(
-                                                            tempIni ?? '30',
-                                                            style: h1w,
-                                                          ),
-                                                          Container(
-                                                            width:
-                                                                Get.width / 100,
-                                                            height:
-                                                                Get.height / 10,
-                                                            color: Colors.white,
-                                                          ),
-                                                          Text(
-                                                            '\u2103',
-                                                            style: h1w,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
+                                                ),
+                                              )
+                                            : Container(),
+                                        Text(
+                                          "Kualitas Udara saat ini",
+                                          textAlign: TextAlign.center,
+                                          style: h1bx,
+                                        ),
+                                        Text(
+                                          widget.ispu.toString(),
+                                          textAlign: TextAlign.center,
+                                          style: h1b,
                                         ),
                                       ],
                                     ),
                                   ),
-                                ),
-                              ),
-                              SizedBox(
-                                  width: Get.width / 1.1,
-                                  height: Get.height / 13,
-                                  child: Card(
-                                    shape: roundedrec,
-                                    child: Row(
+                                  SizedBox(
+                                    width: Get.width / 2.5,
+                                    height: Get.height / 3.5,
+                                    child: Column(
                                       children: [
-                                        const SizedBox(
-                                          width: 10,
+                                        Text(
+                                          formattedDate,
+                                          textAlign: TextAlign.center,
+                                          style: h1bx,
                                         ),
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                                'assets/icons/udara.png'),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                        Text(
+                                          'Surabaya',
+                                          textAlign: TextAlign.center,
+                                          style: h1b,
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        SizedBox(
+                                          width: Get.width / 2.5,
+                                          height: Get.height / 8,
+                                          child: Card(
+                                            color: Colors.greenAccent,
+                                            child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
+                                                  MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Text(
-                                                  'Kelembaban',
-                                                  style: h1b.copyWith(
-                                                      fontSize: 15),
+                                                  '28',
+                                                  style: h1w,
                                                 ),
-                                                Text(humIni.toString()),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          height: 40,
-                                          width: 3,
-                                          color: Colors.grey,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                                'assets/icons/lembab.png'),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
+                                                Container(
+                                                  width: Get.width / 100,
+                                                  height: Get.height / 10,
+                                                  color: Colors.white,
+                                                ),
                                                 Text(
-                                                  'Udara',
-                                                  style: h1b.copyWith(
-                                                      fontSize: 15),
+                                                  '\u2103',
+                                                  style: h1w,
                                                 ),
-                                                Text(windIni.toString()),
                                               ],
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ],
                                     ),
-                                  )),
-                              SizedBox(
-                                width: Get.width / 1.1,
-                                height: Get.height / 2.5,
-                                child: Card(
-                                    color: unguKeren,
-                                    shape: roundedrec,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: charts.BarChart(
-                                        series,
-                                        animate: true,
-                                      ),
-                                    )),
-                              )
+                                  )
+                                ],
+                              ),
                             ],
                           ),
-                        );
-                      }
-                    },
-                  ),
-                );
-              },
-            ),
-    );
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                        width: Get.width / 1.1,
+                        height: Get.height / 13,
+                        child: Card(
+                          shape: roundedrec,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset('assets/icons/udara.png'),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(
+                                        width: Get.width / 4,
+                                        child: Text(
+                                          'Kelembaban',
+                                          style: h1b.copyWith(fontSize: 15),
+                                        ),
+                                      ),
+                                      Text('100'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                height: 40,
+                                width: 3,
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset('assets/icons/lembab.png'),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      SizedBox(
+                                        width: Get.width / 4,
+                                        child: Text(
+                                          'Udara',
+                                          style: h1b.copyWith(fontSize: 15),
+                                        ),
+                                      ),
+                                      Text('3.8'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        )),
+                    SizedBox(
+                      width: Get.width / 1.1,
+                      height: Get.height / 2.5,
+                      child: Card(
+                          color: unguKeren,
+                          shape: roundedrec,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: charts.BarChart(
+                              series,
+                              animate: true,
+                            ),
+                          )),
+                    )
+                  ],
+                ),
+              ));
   }
 }
 

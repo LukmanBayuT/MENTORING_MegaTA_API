@@ -8,10 +8,10 @@ import 'package:projectairquality/services/api_services.dart';
 import 'package:projectairquality/services/api_services_news.dart';
 import 'package:projectairquality/services/api_temperature.dart';
 import 'package:projectairquality/views/air_quality/air_quality.dart';
+import 'package:projectairquality/views/authpages.dart/auth_pages.dart';
 import 'package:projectairquality/views/berita/berita_pages.dart';
 import 'package:projectairquality/views/kelola/kelola.dart';
 import 'package:projectairquality/views/laporan/laporan_list.dart';
-import 'package:projectairquality/views/loginsignup/login.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -70,13 +70,14 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    ApiServicesAirQuality().fetchDataTandes();
-    ApiServicesAirQuality().fetchDataAsemworo();
-    ApiServicesAirQuality().fetchDataSukomanunggal();
-    ApiServicesAirQuality().fetchDataBenowo();
-    ApiServicesAirQuality().fetchDataLakarsantri();
-    ApiServicesAirQuality().fetchDataSambikerep();
-    ApiServicesAirQuality().fetchDataPakal();
+    GetNewsApi().getNews;
+    // ApiServicesAirQuality().fetchDataTandes();
+    // ApiServicesAirQuality().fetchDataAsemworo();
+    // ApiServicesAirQuality().fetchDataSukomanunggal();
+    // ApiServicesAirQuality().fetchDataBenowo();
+    // ApiServicesAirQuality().fetchDataLakarsantri();
+    // ApiServicesAirQuality().fetchDataSambikerep();
+    // ApiServicesAirQuality().fetchDataPakal();
     return Scaffold(
         body: SafeArea(
       child: Column(
@@ -182,7 +183,7 @@ class _MainMenuState extends State<MainMenu> {
               ? Beranda(items: items)
               : Container(),
           (isBeranda == false && isBerita == false && isKelola == true)
-              ? LoginPages()
+              ? const KelolaPages()
               : Container(),
           (isBeranda == false && isBerita == true && isKelola == false)
               ? const BeritaPages()
@@ -330,7 +331,7 @@ class Beranda extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Get.to(() => const LaporanList());
+                Get.to(() => const AuthPages());
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

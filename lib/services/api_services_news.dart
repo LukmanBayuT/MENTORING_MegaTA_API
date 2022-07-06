@@ -8,7 +8,7 @@ class GetNewsApi {
       'User-Agent': 'Thunder Client (https://www.thunderclient.com)'
     };
     var url = Uri.parse(
-        'https://newsapi.org/v2/top-headlines?country=id&apiKey=75a62202a3c44ec187bc490e32db874c');
+        'https://newsapi.org/v2/everything?q=air&sortBy=publishedAt&apiKey=75a62202a3c44ec187bc490e32db874c');
 
     var req = http.Request('GET', url);
     req.headers.addAll(headersList);
@@ -17,7 +17,10 @@ class GetNewsApi {
     final resBody = await res.stream.bytesToString();
 
     if (res.statusCode >= 200 && res.statusCode < 300) {
-    } else {}
+      print(resBody);
+    } else {
+      print(res.reasonPhrase);
+    }
     return newsApiFromJson(resBody);
   }
 }

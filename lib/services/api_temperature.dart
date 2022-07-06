@@ -23,16 +23,16 @@ class ApiTemperature {
     final resBody = await res.stream.bytesToString();
 
     if (res.statusCode >= 200 && res.statusCode < 300) {
-      var jsonTemp = jsonDecode(resBody);
-      var tempIni = jsonTemp['current']['temp_c'];
-      var windIni = jsonTemp['current']['wind_mph'];
-      var humidityIni = jsonTemp['current']['humidity'];
-      await secureStorage.writeSecureData('temp', tempIni.toString());
-      await secureStorage.writeSecureData('wind', windIni.toString());
-      await secureStorage.writeSecureData('hum', humidityIni.toString());
-      print(tempIni);
-      print(windIni);
-      print(humidityIni);
+      // var jsonTemp = jsonDecode(resBody);
+      // var tempIni = jsonTemp['current']['temp_c'];
+      // var windIni = jsonTemp['current']['wind_mph'];
+      // var humidityIni = jsonTemp['current']['humidity'];
+      // await secureStorage.writeSecureData('temp', tempIni.toString());
+      // await secureStorage.writeSecureData('wind', windIni.toString());
+      // await secureStorage.writeSecureData('hum', humidityIni.toString());
+      // print(tempIni);
+      // print(windIni);
+      // print(humidityIni);
     } else {
       print(res.reasonPhrase);
     }

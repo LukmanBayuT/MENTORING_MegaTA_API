@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:projectairquality/const/const.dart';
+import 'package:projectairquality/views/authpages.dart/auth_pages.dart';
 
 class KelolaPages extends StatefulWidget {
   const KelolaPages({Key? key}) : super(key: key);
@@ -22,6 +24,7 @@ class _KelolaPagesState extends State<KelolaPages> {
       width: Get.width,
       height: Get.height / 1.3,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
               width: Get.width,
@@ -33,14 +36,18 @@ class _KelolaPagesState extends State<KelolaPages> {
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      user!.email!,
-                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                child: SizedBox(
+                  width: Get.width,
+                  height: Get.height / 15,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => const AuthPages());
+                    },
+                    child: Text(
+                      'Menuju Laporan',
+                      style: h1w,
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
