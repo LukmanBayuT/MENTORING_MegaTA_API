@@ -20,6 +20,7 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
   bool isLoading = false;
 
   final deskripsi = TextEditingController();
+  final laporCont = TextEditingController();
 
   String? alamat;
   String? namaTempat;
@@ -124,6 +125,40 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                               ],
                             )),
                         Flexible(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(
+                                  'Nama Pelapor',
+                                  style: h1b,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  controller: laporCont,
+                                  decoration: InputDecoration(
+                                      // labelText: 'Nama Pelapor',
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 1, color: Colors.grey),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            width: 1, color: Colors.red),
+                                        borderRadius: BorderRadius.circular(15),
+                                      )),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Flexible(
                             flex: 1,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,10 +258,13 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                               setState(() {
                                 isLoading = true;
                               });
-                              createLaporan('Mega', deskripsi.text, namaTempat,
-                                      alamat)
-                                  .then((value) => Timer(
-                                      const Duration(seconds: 1), goToFinish));
+                              createLaporan(
+                                laporCont.text,
+                                deskripsi.text,
+                                namaTempat,
+                                alamat,
+                              ).then((value) => Timer(
+                                  const Duration(seconds: 1), goToFinish));
                             },
                             child: (isLoading == true)
                                 ? const Center(
@@ -254,7 +292,7 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
   Future createLaporan(String name, deskripsi, namaTempat, alamat) async {
     final docLaporan = FirebaseFirestore.instance.collection('laporan').doc();
     final json = {
-      'name': 'Mega',
+      'name': name,
       'tempat': namaTempat,
       'alamat': alamat,
       'deskripsi': deskripsi,

@@ -31,6 +31,14 @@ class _KelolaPagesState extends State<KelolaPages> {
               height: Get.height / 4,
               child: Lottie.asset('assets/animation/user_profile.json')),
           SizedBox(
+              width: Get.width,
+              height: Get.height / 4,
+              child: Center(
+                  child: Text(
+                user!.email!,
+                style: h1b,
+              ))),
+          SizedBox(
             width: Get.width,
             height: Get.height / 4,
             child: Padding(
