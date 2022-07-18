@@ -19,8 +19,32 @@ var h1b = GoogleFonts.poppins(
   color: Colors.black,
 );
 
+var h1o = GoogleFonts.poppins(
+  fontSize: 19,
+  fontWeight: FontWeight.w700,
+  color: Colors.orangeAccent,
+);
+
 var h1bx = GoogleFonts.poppins(
   fontSize: 18,
+  fontWeight: FontWeight.w600,
+  color: Colors.black,
+);
+
+var h1wx = GoogleFonts.poppins(
+  fontSize: 18,
+  fontWeight: FontWeight.w600,
+  color: Colors.white,
+);
+
+var h2bx = GoogleFonts.poppins(
+  fontSize: 16,
+  fontWeight: FontWeight.w600,
+  color: Colors.black,
+);
+
+var h3bx = GoogleFonts.poppins(
+  fontSize: 14,
   fontWeight: FontWeight.w600,
   color: Colors.black,
 );

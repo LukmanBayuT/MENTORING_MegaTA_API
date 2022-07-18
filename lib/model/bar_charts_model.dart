@@ -5,5 +5,9 @@ class BarCharts {
   int? angka;
   late final charts.Color? color;
 
-  BarCharts({required this.jenis, required this.angka, required this.color});
+  BarCharts({
+    required this.jenis,
+    required this.angka,
+    required this.color,
+  });
 }
