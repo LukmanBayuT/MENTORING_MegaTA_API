@@ -18,7 +18,7 @@ class AirQuality extends StatefulWidget {
 
 class _AirQualityState extends State<AirQuality> {
   CameraPosition initialCameraPosition = const CameraPosition(
-      zoom: 12, tilt: 20, target: LatLng(-7.2756141, 112.6426429));
+      zoom: 11, tilt: 20, target: LatLng(-7.2756141, 112.6426429));
 
   String? kecAsem = 'Kecamatan Asemworo';
   // num? kecAsemworo;
@@ -34,6 +34,29 @@ class _AirQualityState extends State<AirQuality> {
   // num? kecSukomanunggal;
   String? kecTan = 'Kecamatan Tandes';
   // num? kecTandes;
+  String? kecGen = 'Kecamatan Genteng';
+  String? kecKen = 'Kecamatan Kenjeran';
+  String? kecMul = 'Kecamatan Mulyorejo';
+  String? kecRung = 'Kecamatan Rungkut';
+  String? kecSaw = 'Kecamatan Sawahan';
+  String? kecWiy = 'Kecamatan Wiyung';
+  String? kecWon = 'Kecamatan Wonokromo';
+
+  String? latGen = '-7.259088';
+  String? longGen = '112.747986';
+  String? latKen = '-7.220266';
+  String? longKen = '112.768842';
+  String? latMul = '-7.269315';
+  String? longMul = '112.792676';
+  String? latRung = '-7.319019';
+  String? longRung = '112.804593';
+  String? latSaw = '-7.2630131';
+  String? longSaw = '112.7211714';
+  String? latWiy = '-7.315256';
+  String? longWiy = '112.685417';
+  String? latWon = '-7.302664';
+  String? longWon = '112.733089';
+
   String? latAsm = '-7.2388207';
   String? latBen = '-7.2285631';
   String? latLak = '-7.3226681';
@@ -62,66 +85,8 @@ class _AirQualityState extends State<AirQuality> {
 
   @override
   void initState() {
-    // readTandes();
-    // readAsemworo();
-    // readSukomanunggal();
-    // readBenowo();
-    // readSambikerep();
-    // readPakal();
-    // readLakarsantri();
     super.initState();
   }
-
-  // void readTandes() async {
-  //   var kecTandesStr = await secureStorage.readSecureData('kecTandes');
-  //   var kecTandesParse = int.parse(kecTandesStr);
-  //   kecTandes = kecTandesParse;
-  //   setState(() {});
-  // }
-
-  // void readAsemworo() async {
-  //   var kecAsemworoStr = await secureStorage.readSecureData('kecAsemworo');
-  //   var kecAsemworoParse = int.parse(kecAsemworoStr);
-  //   kecAsemworo = kecAsemworoParse;
-  //   setState(() {});
-  // }
-
-  // void readSukomanunggal() async {
-  //   var kecSukomanunggalStr =
-  //       await secureStorage.readSecureData('kecSukomanunggal');
-  //   var kecSukomanunggalParse = int.parse(kecSukomanunggalStr);
-  //   kecSukomanunggal = kecSukomanunggalParse;
-  //   setState(() {});
-  // }
-
-  // void readBenowo() async {
-  //   var kecBenowoStr = await secureStorage.readSecureData('kecBenowo');
-  //   var kecBenowoParseStr = int.parse(kecBenowoStr);
-  //   kecBenowo = kecBenowoParseStr;
-  //   setState(() {});
-  // }
-
-  // void readSambikerep() async {
-  //   var kecSambikerepStr = await secureStorage.readSecureData('kecSambikerep');
-  //   var kecSambikerepParse = int.parse(kecSambikerepStr);
-  //   kecSambikerep = kecSambikerepParse;
-  //   setState(() {});
-  // }
-
-  // void readPakal() async {
-  //   var kecPakalStr = await secureStorage.readSecureData('kecPakal');
-  //   var kecPakalParse = int.parse(kecPakalStr);
-  //   kecPakal = kecPakalParse;
-  //   setState(() {});
-  // }
-
-  // void readLakarsantri() async {
-  //   var kecLakarsantriStr =
-  //       await secureStorage.readSecureData('kecLakarsantri');
-  //   var kecLakarParse = int.parse(kecLakarsantriStr);
-  //   kecLakarsantri = kecLakarParse;
-  //   setState(() {});
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -152,95 +117,51 @@ class _AirQualityState extends State<AirQuality> {
                 infoWindow: InfoWindow(
                     onTap: () {
                       Get.to(() => AirQualityDetails(
-                            ispu: data[7].data()['ispu'],
+                            ispu: data[16].data()['ispu'],
                             alamat: kecTan,
                             lat: latTan,
                             long: longTan,
-                            co: data[7].data()['co'],
-                            no2: data[7].data()['no2'],
-                            o3: data[7].data()['o3'],
-                            pm10: data[7].data()['pm10'],
-                            pm25: data[7].data()['pm25'],
-                            so2: data[7].data()['so2'],
+                            co: data[16].data()['co'],
+                            no2: data[16].data()['no2'],
+                            o3: data[16].data()['o3'],
+                            pm10: data[16].data()['pm10'],
+                            pm25: data[16].data()['pm25'],
+                            so2: data[16].data()['so2'],
+                            pk: data[16].data()['pk'],
                           ));
                     },
                     title: 'Kecamatan Tandes',
-                    snippet: 'ISPU : ${data[7].data()['ispu'].toString()}'),
+                    snippet: 'ISPU : ${data[16].data()['ispu'].toString()}'),
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                     BitmapDescriptor.hueRed),
               ),
-              Marker(
-                markerId: const MarkerId('Kecamatan Asemworo'),
-                position: const LatLng(-7.2388207, 112.6714753),
-                infoWindow: InfoWindow(
-                    onTap: () {
-                      Get.to(() => AirQualityDetails(
-                            ispu: data[1].data()['ispu'],
-                            alamat: kecAsem,
-                            lat: latAsm,
-                            long: longAsm,
-                            co: data[1].data()['co'],
-                            no2: data[1].data()['no2'],
-                            o3: data[1].data()['o3'],
-                            pm10: data[1].data()['pm10'],
-                            pm25: data[1].data()['pm25'],
-                            so2: data[1].data()['so2'],
-                          ));
-                    },
-                    title: 'Kecamatan Asemworo',
-                    snippet: 'ISPU : ${data[1].data()['ispu'].toString()}'),
-                icon: BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueRed),
-              ),
-              Marker(
-                markerId: const MarkerId('Kecamatan Sukomanunggal'),
-                position: const LatLng(-7.2704832, 112.6818934),
-                infoWindow: InfoWindow(
-                    onTap: () {
-                      Get.to(() => AirQualityDetails(
-                            ispu: data[6].data()['ispu'],
-                            alamat: kecSuko,
-                            lat: latSuko,
-                            long: longSuko,
-                            co: data[6].data()['co'],
-                            no2: data[6].data()['no2'],
-                            o3: data[6].data()['o3'],
-                            pm10: data[6].data()['pm10'],
-                            pm25: data[6].data()['pm25'],
-                            so2: data[6].data()['so2'],
-                          ));
-                    },
-                    title: 'Kecamatan Sukomanunggal',
-                    snippet: 'ISPU : ${data[6].data()['ispu'].toString()}'),
-                icon: BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueRed),
-              ),
-              Marker(
-                  markerId: const MarkerId('Kecamatan Benowo'),
-                  position: const LatLng(-7.2285631, 112.6115998),
-                  infoWindow: InfoWindow(
-                      onTap: () {
-                        Get.to(() => AirQualityDetails(
-                              ispu: data[2].data()['ispu'],
-                              alamat: kecBen,
-                              lat: latBen,
-                              long: longBen,
-                              co: data[2].data()['co'],
-                              no2: data[2].data()['no2'],
-                              o3: data[2].data()['o3'],
-                              pm10: data[2].data()['pm10'],
-                              pm25: data[2].data()['pm25'],
-                              so2: data[2].data()['so2'],
-                            ));
-                      },
-                      title: 'Kecamatan Benowo',
-                      snippet: 'ISPU : ${data[2].data()['ispu'].toString()}'),
-                  icon: BitmapDescriptor.defaultMarkerWithHue(
-                      BitmapDescriptor.hueRed),
-                  onTap: () {}),
               Marker(
                 markerId: const MarkerId('Kecamatan Lakarsantri'),
                 position: const LatLng(-7.3226681, 112.6178609),
+                infoWindow: InfoWindow(
+                    onTap: () {
+                      Get.to(() => AirQualityDetails(
+                            ispu: data[12].data()['ispu'],
+                            alamat: kecLakar,
+                            lat: latLak,
+                            long: longLak,
+                            co: data[12].data()['co'],
+                            no2: data[12].data()['no2'],
+                            o3: data[12].data()['o3'],
+                            pm10: data[12].data()['pm10'],
+                            pm25: data[12].data()['pm25'],
+                            so2: data[12].data()['so2'],
+                            pk: data[12].data()['pk'],
+                          ));
+                    },
+                    title: 'Kecamatan Lakarsantri',
+                    snippet: 'ISPU : ${data[12].data()['ispu'].toString()}'),
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueRed),
+              ),
+              Marker(
+                markerId: const MarkerId('Kecamatan Genteng'),
+                position: const LatLng(-7.259088, 112.747986),
                 infoWindow: InfoWindow(
                     onTap: () {
                       Get.to(() => AirQualityDetails(
@@ -254,56 +175,155 @@ class _AirQualityState extends State<AirQuality> {
                             pm10: data[3].data()['pm10'],
                             pm25: data[3].data()['pm25'],
                             so2: data[3].data()['so2'],
+                            pk: data[3].data()['pk'],
                           ));
                     },
-                    title: 'Kecamatan Lakarsantri',
+                    title: 'Kecamatan Genteng',
                     snippet: 'ISPU : ${data[3].data()['ispu'].toString()}'),
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                     BitmapDescriptor.hueRed),
               ),
               Marker(
-                markerId: const MarkerId('Kecamatan Sambikerep'),
-                position: const LatLng(-7.2751222, 112.6377688),
-                infoWindow: InfoWindow(
-                    onTap: () {
-                      Get.to(() => AirQualityDetails(
-                            ispu: data[5].data()['ispu'],
-                            alamat: kecSambi,
-                            lat: latSam,
-                            long: longSam,
-                            co: data[5].data()['co'],
-                            no2: data[5].data()['no2'],
-                            o3: data[5].data()['o3'],
-                            pm10: data[5].data()['pm10'],
-                            pm25: data[5].data()['pm25'],
-                            so2: data[5].data()['so2'],
-                          ));
-                    },
-                    title: 'Kecamatan Sambikerep',
-                    snippet: 'ISPU : ${data[5].data()['ispu'].toString()}'),
-                icon: BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueRed),
-              ),
-              Marker(
-                markerId: const MarkerId('Kecamatan Pakal'),
-                position: const LatLng(-7.2318214, 112.5427117),
+                markerId: const MarkerId('Kecamatan Kenjeran'),
+                position: const LatLng(-7.220266, 112.768842),
                 infoWindow: InfoWindow(
                     onTap: () {
                       Get.to(() => AirQualityDetails(
                             ispu: data[4].data()['ispu'],
-                            alamat: kecPak,
-                            lat: latPak,
-                            long: longPak,
+                            alamat: kecLakar,
+                            lat: latLak,
+                            long: longLak,
                             co: data[4].data()['co'],
                             no2: data[4].data()['no2'],
                             o3: data[4].data()['o3'],
                             pm10: data[4].data()['pm10'],
                             pm25: data[4].data()['pm25'],
                             so2: data[4].data()['so2'],
+                            pk: data[4].data()['pk'],
                           ));
                     },
-                    title: 'Kecamatan Pakal',
+                    title: 'Kecamatan Kenjeran',
                     snippet: 'ISPU : ${data[4].data()['ispu'].toString()}'),
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueRed),
+              ),
+              Marker(
+                markerId: const MarkerId('Kecamatan Mulyorejo'),
+                position: const LatLng(-7.269315, 112.792676),
+                infoWindow: InfoWindow(
+                    onTap: () {
+                      Get.to(() => AirQualityDetails(
+                            ispu: data[6].data()['ispu'],
+                            alamat: kecLakar,
+                            lat: latLak,
+                            long: longLak,
+                            co: data[6].data()['co'],
+                            no2: data[6].data()['no2'],
+                            o3: data[6].data()['o3'],
+                            pm10: data[6].data()['pm10'],
+                            pm25: data[6].data()['pm25'],
+                            so2: data[6].data()['so2'],
+                            pk: data[6].data()['pk'],
+                          ));
+                    },
+                    title: 'Kecamatan Mulyorejo',
+                    snippet: 'ISPU : ${data[6].data()['ispu'].toString()}'),
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueRed),
+              ),
+              Marker(
+                markerId: const MarkerId('Kecamatan Rungkut'),
+                position: const LatLng(-7.319019, 112.804593),
+                infoWindow: InfoWindow(
+                    onTap: () {
+                      Get.to(() => AirQualityDetails(
+                            ispu: data[7].data()['ispu'],
+                            alamat: kecLakar,
+                            lat: latLak,
+                            long: longLak,
+                            co: data[7].data()['co'],
+                            no2: data[7].data()['no2'],
+                            o3: data[7].data()['o3'],
+                            pm10: data[7].data()['pm10'],
+                            pm25: data[7].data()['pm25'],
+                            so2: data[7].data()['so2'],
+                            pk: data[7].data()['pk'],
+                          ));
+                    },
+                    title: 'Kecamatan Rungkut',
+                    snippet: 'ISPU : ${data[7].data()['ispu'].toString()}'),
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueRed),
+              ),
+              Marker(
+                markerId: const MarkerId('Kecamatan Sawahan'),
+                position: const LatLng(-7.2630131, 112.7211714),
+                infoWindow: InfoWindow(
+                    onTap: () {
+                      Get.to(() => AirQualityDetails(
+                            ispu: data[8].data()['ispu'],
+                            alamat: kecLakar,
+                            lat: latLak,
+                            long: longLak,
+                            co: data[8].data()['co'],
+                            no2: data[8].data()['no2'],
+                            o3: data[8].data()['o3'],
+                            pm10: data[8].data()['pm10'],
+                            pm25: data[8].data()['pm25'],
+                            so2: data[8].data()['so2'],
+                            pk: data[8].data()['pk'],
+                          ));
+                    },
+                    title: 'Kecamatan Sawahan',
+                    snippet: 'ISPU : ${data[8].data()['ispu'].toString()}'),
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueRed),
+              ),
+              Marker(
+                markerId: const MarkerId('Kecamatan Wiyung'),
+                position: const LatLng(-7.315256, 112.685417),
+                infoWindow: InfoWindow(
+                    onTap: () {
+                      Get.to(() => AirQualityDetails(
+                            ispu: data[10].data()['ispu'],
+                            alamat: kecLakar,
+                            lat: latLak,
+                            long: longLak,
+                            co: data[10].data()['co'],
+                            no2: data[10].data()['no2'],
+                            o3: data[10].data()['o3'],
+                            pm10: data[10].data()['pm10'],
+                            pm25: data[10].data()['pm25'],
+                            so2: data[10].data()['so2'],
+                            pk: data[10].data()['pk'],
+                          ));
+                    },
+                    title: 'Kecamatan Wiyung',
+                    snippet: 'ISPU : ${data[10].data()['ispu'].toString()}'),
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueRed),
+              ),
+              Marker(
+                markerId: const MarkerId('Kecamatan Wonokromo'),
+                position: const LatLng(-7.2630131, 112.7211714),
+                infoWindow: InfoWindow(
+                    onTap: () {
+                      Get.to(() => AirQualityDetails(
+                            ispu: data[11].data()['ispu'],
+                            alamat: kecLakar,
+                            lat: latLak,
+                            long: longLak,
+                            co: data[11].data()['co'],
+                            no2: data[11].data()['no2'],
+                            o3: data[11].data()['o3'],
+                            pm10: data[11].data()['pm10'],
+                            pm25: data[11].data()['pm25'],
+                            so2: data[11].data()['so2'],
+                            pk: data[11].data()['pk'],
+                          ));
+                    },
+                    title: 'Kecamatan Wonokromo',
+                    snippet: 'ISPU : ${data[11].data()['ispu'].toString()}'),
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                     BitmapDescriptor.hueRed),
               ),

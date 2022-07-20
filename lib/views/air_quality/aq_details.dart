@@ -22,6 +22,7 @@ class AirQualityDetails extends StatefulWidget {
     required this.pm10,
     required this.pm25,
     required this.so2,
+    required this.pk,
   }) : super(key: key);
 
   String? alamat;
@@ -34,6 +35,7 @@ class AirQualityDetails extends StatefulWidget {
   num? pm10;
   num? pm25;
   num? so2;
+  String? pk;
 
   @override
   State<AirQualityDetails> createState() => _AirQualityDetailsState();
@@ -871,22 +873,20 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
                                         width: Get.width / 2.5,
                                         height: Get.height / 8,
                                         child: Card(
-                                          color: Colors.greenAccent,
-                                          child: Row(
+                                          color: Colors.amberAccent,
+                                          child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
                                               Text(
-                                                '28',
-                                                style: h1w,
-                                              ),
-                                              Container(
-                                                width: Get.width / 100,
-                                                height: Get.height / 10,
-                                                color: Colors.white,
+                                                'Parameter Kritis',
+                                                style:
+                                                    h1w.copyWith(fontSize: 14),
                                               ),
                                               Text(
-                                                '\u2103',
+                                                widget.pk
+                                                    .toString()
+                                                    .toUpperCase(),
                                                 style: h1w,
                                               ),
                                             ],
@@ -994,24 +994,106 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
-              height: Get.height / 10,
-              width: Get.width / 4,
-              color: Colors.green,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    title,
-                    style: h1wx,
-                  ),
-                  Text(
-                    dataTitle.toString(),
-                    style: h1wx,
-                  ),
-                ],
-              ),
-            ),
+            (dataTitle <= 50)
+                ? Container(
+                    height: Get.height / 10,
+                    width: Get.width / 4,
+                    color: Colors.green,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          title,
+                          style: h1wx,
+                        ),
+                        Text(
+                          dataTitle.toString(),
+                          style: h1wx,
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
+            (dataTitle > 50 && dataTitle <= 100)
+                ? Container(
+                    height: Get.height / 10,
+                    width: Get.width / 4,
+                    color: Colors.blue,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          title,
+                          style: h1wx,
+                        ),
+                        Text(
+                          dataTitle.toString(),
+                          style: h1wx,
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
+            (dataTitle > 100 && dataTitle <= 200)
+                ? Container(
+                    height: Get.height / 10,
+                    width: Get.width / 4,
+                    color: Colors.amber,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          title,
+                          style: h1wx,
+                        ),
+                        Text(
+                          dataTitle.toString(),
+                          style: h1wx,
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
+            (dataTitle > 200 && dataTitle <= 300)
+                ? Container(
+                    height: Get.height / 10,
+                    width: Get.width / 4,
+                    color: Colors.red,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          title,
+                          style: h1wx,
+                        ),
+                        Text(
+                          dataTitle.toString(),
+                          style: h1wx,
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
+            (dataTitle > 300)
+                ? Container(
+                    height: Get.height / 10,
+                    width: Get.width / 4,
+                    color: Colors.black,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          title,
+                          style: h1wx,
+                        ),
+                        Text(
+                          dataTitle.toString(),
+                          style: h1wx,
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
             Container(
               width: Get.width / 1.7,
               height: Get.height / 10,
