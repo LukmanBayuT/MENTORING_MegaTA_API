@@ -117,21 +117,21 @@ class _AirQualityState extends State<AirQuality> {
                 infoWindow: InfoWindow(
                     onTap: () {
                       Get.to(() => AirQualityDetails(
-                            ispu: data[16].data()['ispu'],
+                            ispu: data[9].data()['ispu'],
                             alamat: kecTan,
                             lat: latTan,
                             long: longTan,
-                            co: data[16].data()['co'],
-                            no2: data[16].data()['no2'],
-                            o3: data[16].data()['o3'],
-                            pm10: data[16].data()['pm10'],
-                            pm25: data[16].data()['pm25'],
-                            so2: data[16].data()['so2'],
-                            pk: data[16].data()['pk'],
+                            co: data[9].data()['co'],
+                            no2: data[9].data()['no2'],
+                            o3: data[9].data()['o3'],
+                            pm10: data[9].data()['pm10'],
+                            pm25: data[9].data()['pm25'],
+                            so2: data[9].data()['so2'],
+                            pk: data[9].data()['pk'],
                           ));
                     },
                     title: 'Kecamatan Tandes',
-                    snippet: 'ISPU : ${data[16].data()['ispu'].toString()}'),
+                    snippet: 'ISPU : ${data[9].data()['ispu'].toString()}'),
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                     BitmapDescriptor.hueRed),
               ),
@@ -141,21 +141,21 @@ class _AirQualityState extends State<AirQuality> {
                 infoWindow: InfoWindow(
                     onTap: () {
                       Get.to(() => AirQualityDetails(
-                            ispu: data[12].data()['ispu'],
+                            ispu: data[5].data()['ispu'],
                             alamat: kecLakar,
                             lat: latLak,
                             long: longLak,
-                            co: data[12].data()['co'],
-                            no2: data[12].data()['no2'],
-                            o3: data[12].data()['o3'],
-                            pm10: data[12].data()['pm10'],
-                            pm25: data[12].data()['pm25'],
-                            so2: data[12].data()['so2'],
-                            pk: data[12].data()['pk'],
+                            co: data[5].data()['co'],
+                            no2: data[5].data()['no2'],
+                            o3: data[5].data()['o3'],
+                            pm10: data[5].data()['pm10'],
+                            pm25: data[5].data()['pm25'],
+                            so2: data[5].data()['so2'],
+                            pk: data[5].data()['pk'],
                           ));
                     },
                     title: 'Kecamatan Lakarsantri',
-                    snippet: 'ISPU : ${data[12].data()['ispu'].toString()}'),
+                    snippet: 'ISPU : ${data[5].data()['ispu'].toString()}'),
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                     BitmapDescriptor.hueRed),
               ),
@@ -166,7 +166,7 @@ class _AirQualityState extends State<AirQuality> {
                     onTap: () {
                       Get.to(() => AirQualityDetails(
                             ispu: data[3].data()['ispu'],
-                            alamat: kecLakar,
+                            alamat: kecGen,
                             lat: latLak,
                             long: longLak,
                             co: data[3].data()['co'],
@@ -190,7 +190,7 @@ class _AirQualityState extends State<AirQuality> {
                     onTap: () {
                       Get.to(() => AirQualityDetails(
                             ispu: data[4].data()['ispu'],
-                            alamat: kecLakar,
+                            alamat: kecKen,
                             lat: latLak,
                             long: longLak,
                             co: data[4].data()['co'],
@@ -214,7 +214,7 @@ class _AirQualityState extends State<AirQuality> {
                     onTap: () {
                       Get.to(() => AirQualityDetails(
                             ispu: data[6].data()['ispu'],
-                            alamat: kecLakar,
+                            alamat: kecMul,
                             lat: latLak,
                             long: longLak,
                             co: data[6].data()['co'],
@@ -238,7 +238,7 @@ class _AirQualityState extends State<AirQuality> {
                     onTap: () {
                       Get.to(() => AirQualityDetails(
                             ispu: data[7].data()['ispu'],
-                            alamat: kecLakar,
+                            alamat: kecRung,
                             lat: latLak,
                             long: longLak,
                             co: data[7].data()['co'],
@@ -262,7 +262,7 @@ class _AirQualityState extends State<AirQuality> {
                     onTap: () {
                       Get.to(() => AirQualityDetails(
                             ispu: data[8].data()['ispu'],
-                            alamat: kecLakar,
+                            alamat: kecSaw,
                             lat: latLak,
                             long: longLak,
                             co: data[8].data()['co'],
@@ -286,7 +286,7 @@ class _AirQualityState extends State<AirQuality> {
                     onTap: () {
                       Get.to(() => AirQualityDetails(
                             ispu: data[10].data()['ispu'],
-                            alamat: kecLakar,
+                            alamat: kecWiy,
                             lat: latLak,
                             long: longLak,
                             co: data[10].data()['co'],
@@ -305,12 +305,12 @@ class _AirQualityState extends State<AirQuality> {
               ),
               Marker(
                 markerId: const MarkerId('Kecamatan Wonokromo'),
-                position: const LatLng(-7.2630131, 112.7211714),
+                position: const LatLng(-7.298764, 112.7339083),
                 infoWindow: InfoWindow(
                     onTap: () {
                       Get.to(() => AirQualityDetails(
                             ispu: data[11].data()['ispu'],
-                            alamat: kecLakar,
+                            alamat: kecWon,
                             lat: latLak,
                             long: longLak,
                             co: data[11].data()['co'],

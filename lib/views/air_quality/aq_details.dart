@@ -710,10 +710,10 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     SizedBox(
-                                      width: Get.width / 4,
+                                      width: Get.width / 8,
                                       child: Text(
                                         'Kelembaban',
-                                        style: h1b.copyWith(fontSize: 14),
+                                        style: h1b.copyWith(fontSize: 10),
                                       ),
                                     ),
                                     const Text('100'),
@@ -744,13 +744,47 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     SizedBox(
-                                      width: Get.width / 4,
+                                      width: Get.width / 9,
                                       child: Text(
                                         'Udara',
-                                        style: h1b.copyWith(fontSize: 14),
+                                        style: h1b.copyWith(fontSize: 10),
                                       ),
                                     ),
                                     const Text('3.8'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              height: 40,
+                              width: 3,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Row(
+                              children: [
+                                Icon(Icons.thermostat),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    SizedBox(
+                                      width: Get.width / 8,
+                                      child: Text(
+                                        'Suhu',
+                                        style: h1b.copyWith(fontSize: 10),
+                                      ),
+                                    ),
+                                    const Text('30\u2103'),
                                   ],
                                 ),
                               ],
