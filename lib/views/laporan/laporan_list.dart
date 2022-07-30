@@ -43,33 +43,44 @@ class _LaporanListState extends State<LaporanList> {
                           padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
                             width: Get.width,
-                            height: Get.height / 4,
+                            height: Get.height / 3,
                             child: Card(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Nama Pelapor',
-                                    style: h1bx,
-                                  ),
-                                  Text(
-                                    _data[index].data()['name'].toString(),
-                                    style: h1b,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    _data[index].data()['tempat'].toString(),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(_data[index]
-                                      .data()['deskripsi']
-                                      .toString()),
-                                ],
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 150,
+                                      child: Image.network(
+                                        _data[index].data()['urlPict'] ??
+                                            'https://www.freeiconspng.com/thumbs/load-icon-png/loading-icon-3.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Nama Pelapor',
+                                      style: h1bx,
+                                    ),
+                                    Text(
+                                      _data[index].data()['name'].toString(),
+                                      style: h1b,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      _data[index].data()['tempat'].toString(),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(_data[index]
+                                        .data()['deskripsi']
+                                        .toString()),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

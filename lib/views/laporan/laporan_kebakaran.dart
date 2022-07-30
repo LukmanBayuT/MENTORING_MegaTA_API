@@ -21,289 +21,311 @@ class LaporanKebakaranSub extends StatefulWidget {
 class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
   FirebaseStorage storage = FirebaseStorage.instance;
   PlatformFile? pickedFile;
+  UploadTask? uploadTask;
   bool isLoading = false;
+  bool isUploaded = false;
 
   final deskripsi = TextEditingController();
   final laporCont = TextEditingController();
 
   String? alamat;
   String? namaTempat;
-  File? image1;
+  String? urlPict;
 
-  void _getFromCam1() async {
-    XFile? pickedFile1 = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxHeight: 1080,
-      maxWidth: 1080,
-    );
-    if (mounted) {
-      setState(() {
-        if (pickedFile1 != null) {
-          image1 = File(pickedFile1.path);
-        } else {
-          null;
-        }
-      });
-    }
-  }
+  // void _getFromCam1() async {
+  //   XFile? pickedFile1 = await ImagePicker().pickImage(
+  //     source: ImageSource.camera,
+  //     maxHeight: 1080,
+  //     maxWidth: 1080,
+  //   );
+  //   if (mounted) {
+  //     setState(() {
+  //       if (pickedFile1 != null) {
+  //         image1 = File(pickedFile1.path);
+  //       } else {
+  //         null;
+  //       }
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Lapor'),
-          backgroundColor: Colors.white,
-        ),
-        body: (isLoading == false)
-            ? SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                            flex: 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Foto Kebakaran',
-                                  style: h1b,
-                                ),
-                                pickedFile != null
-                                    ? GestureDetector(
-                                        onTap: selectFile,
-                                        child: Card(
-                                          child: SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.1,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                5,
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  4,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  8,
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                child: Image.file(
-                                                    File(pickedFile!.path!),
-                                                    fit: BoxFit.cover),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: selectFile,
-                                        child: Card(
-                                          child: SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.1,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                5,
-                                            child: const Center(
-                                              child: Icon(
-                                                Icons.photo_camera_front_sharp,
-                                                size: 60,
-                                                color: Colors.amber,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                              ],
-                            )),
-                        Flexible(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  'Nama Pelapor',
-                                  style: h1b,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextField(
-                                  controller: laporCont,
-                                  decoration: InputDecoration(
-                                      // labelText: 'Nama Pelapor',
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 1, color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            width: 1, color: Colors.red),
-                                        borderRadius: BorderRadius.circular(15),
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Flexible(
-                            flex: 1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Lokasi',
-                                  style: h1b,
-                                ),
-                                GestureDetector(
-                                  onTap: showPlacePicker,
-                                  child: Card(
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                          1.1,
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              15,
-                                      child: Center(
-                                        child: Row(
-                                          children: [
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            const Icon(
-                                              Icons.gps_fixed,
-                                              size: 20,
-                                              color: Colors.amber,
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1.5,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    namaTempat ?? 'Nama Tempat',
-                                                    style: h2b,
-                                                  ),
-                                                  Text(
-                                                    alamat ?? 'Alamat',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            )),
-                        Flexible(
-                            flex: 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Deskripsi',
-                                  style: h1b,
-                                ),
-                                Card(
+      appBar: AppBar(
+        title: const Text('Lapor'),
+        backgroundColor: Colors.white,
+      ),
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints:
+              BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Foto Kebakaran',
+                        style: h1b,
+                      ),
+                      pickedFile != null
+                          ? GestureDetector(
+                              onTap: selectFile,
+                              child: Card(
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.1,
+                                  height:
+                                      MediaQuery.of(context).size.height / 5,
                                   child: SizedBox(
                                     width:
-                                        MediaQuery.of(context).size.width / 1.1,
+                                        MediaQuery.of(context).size.width / 4,
                                     height:
-                                        MediaQuery.of(context).size.height / 6,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: TextField(
-                                          controller: deskripsi,
-                                          decoration: const InputDecoration
-                                                  .collapsed(
-                                              hintText:
-                                                  'Deskripsikan Situasimu')),
+                                        MediaQuery.of(context).size.height / 8,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.file(File(pickedFile!.path!),
+                                          fit: BoxFit.cover),
                                     ),
                                   ),
-                                )
-                              ],
-                            )),
-                        Flexible(
-                            child: SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.1,
-                          height: MediaQuery.of(context).size.height / 15,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              uploadFile();
-
-                              // createLaporan(
-                              //   laporCont.text,
-                              //   deskripsi.text,
-                              //   namaTempat,
-                              //   alamat,
-                              // ).then(
-                              //   (value) => Timer(
-                              //     const Duration(seconds: 1),
-                              //     goToFinish,
-                              //   ),
-                              // );
-                            },
-                            child: (isLoading == true)
-                                ? const Center(
-                                    child: CircularProgressIndicator(
-                                        color: Colors.white),
-                                  )
-                                : Text(
-                                    'Submit',
-                                    style: h1w,
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: selectFile,
+                              child: Card(
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.1,
+                                  height:
+                                      MediaQuery.of(context).size.height / 5,
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.photo_camera_front_sharp,
+                                      size: 60,
+                                      color: Colors.amber,
+                                    ),
                                   ),
+                                ),
+                              ),
+                            ),
+                      // buildProgress(),
+                      // SizedBox(
+                      //   width: MediaQuery.of(context).size.width / 1.1,
+                      //   height: MediaQuery.of(context).size.height / 20,
+                      //   child: ElevatedButton(
+                      //     onPressed: () {
+                      //       uploadFile();
+
+                      //       setState(() {
+                      //         isUploaded = true;
+                      //       });
+                      //     },
+                      //     child: Text(
+                      //       'Upload',
+                      //       style: h1w,
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          'Nama Pelapor',
+                          style: h1b,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: laporCont,
+                          decoration: InputDecoration(
+                              // labelText: 'Nama Pelapor',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    width: 1, color: Colors.red),
+                                borderRadius: BorderRadius.circular(15),
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Flexible(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Lokasi',
+                          style: h1b,
+                        ),
+                        GestureDetector(
+                          onTap: showPlacePicker,
+                          child: Card(
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.1,
+                              height: MediaQuery.of(context).size.height / 15,
+                              child: Center(
+                                child: Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    const Icon(
+                                      Icons.gps_fixed,
+                                      size: 20,
+                                      color: Colors.amber,
+                                    ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.5,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            namaTempat ?? 'Nama Tempat',
+                                            style: h2b,
+                                          ),
+                                          Text(
+                                            alamat ?? 'Alamat',
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
-                        )),
+                        )
                       ],
+                    )),
+                Flexible(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Deskripsi',
+                          style: h1b,
+                        ),
+                        Card(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.1,
+                            height: MediaQuery.of(context).size.height / 6,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextField(
+                                  controller: deskripsi,
+                                  decoration: const InputDecoration.collapsed(
+                                      hintText: 'Deskripsikan Situasimu')),
+                            ),
+                          ),
+                        )
+                      ],
+                    )),
+                Flexible(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 1.1,
+                    height: MediaQuery.of(context).size.height / 15,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        uploadFile();
+                        createLaporan(
+                          laporCont.text,
+                          deskripsi.text,
+                          namaTempat,
+                          alamat,
+                          urlPict,
+                        );
+                        goToFinish();
+                      },
+                      child: isUploaded
+                          ? Text(
+                              'Submit',
+                              style: h1w,
+                            )
+                          : Text(
+                              'Upload Dulu',
+                              style: h1w,
+                            ),
                     ),
                   ),
                 ),
-              )
-            : const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.amber,
-                ),
-              ));
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
-  Future createLaporan(String name, deskripsi, namaTempat, alamat) async {
+  Widget buildProgress() => StreamBuilder<TaskSnapshot>(
+        stream: uploadTask?.snapshotEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final data = snapshot.data!;
+            double progress = data.bytesTransferred / data.totalBytes;
+            return SizedBox(
+              height: 50,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  LinearProgressIndicator(
+                    value: progress,
+                    backgroundColor: Colors.grey,
+                    color: Colors.green,
+                  ),
+                  Center(
+                    child: Text(
+                      '${(100 * progress).roundToDouble()}%',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox(
+              height: 50,
+            );
+          }
+        },
+      );
+
+  Future createLaporan(String name, deskripsi, namaTempat, alamat, pict) async {
     final docLaporan = FirebaseFirestore.instance.collection('laporan').doc();
     final json = {
       'name': name,
       'tempat': namaTempat,
       'alamat': alamat,
       'deskripsi': deskripsi,
+      'urlPict': pict,
     };
 
     await docLaporan.set(json);
@@ -323,22 +345,29 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
     final file = File(pickedFile!.path!);
 
     final ref = FirebaseStorage.instance.ref().child(path);
-    ref.putFile(file);
-  }
+    uploadTask = ref.putFile(
+      file,
+      SettableMetadata(
+        customMetadata: {
+          'name': laporCont.text,
+          'desc': deskripsi.text,
+          'address': namaTempat!,
+          'address2': alamat!,
+        },
+      ),
+    );
 
-  Future createLaporanImages(
-      String name, deskripsi, namaTempat, alamat, File gambar) async {
-    storage.ref('laporan').putFile(
-          gambar,
-          SettableMetadata(
-            customMetadata: {
-              'name': name,
-              'desc': deskripsi,
-              'address': namaTempat,
-              'address2': alamat,
-            },
-          ),
-        );
+    final snapshot = await uploadTask!.whenComplete(() {});
+    debugPrint('done');
+
+    final urlDownload =
+        await snapshot.ref.getDownloadURL().then((value) => urlPict = value);
+    debugPrint('download Link : $urlDownload');
+    // setState(() {
+    //   urlPict = urlDownload;
+    // });
+
+    print(urlPict);
   }
 
   void showPlacePicker() async {

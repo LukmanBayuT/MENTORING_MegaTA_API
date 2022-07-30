@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "464517677256",
+    "firebase_url": "https://airqualitymega-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "airqualitymega",
     "storage_bucket": "airqualitymega.appspot.com"
   },
@@ -19,6 +20,14 @@
           "android_info": {
             "package_name": "com.example.projectairquality",
             "certificate_hash": "aacee087ff1dc625225b314adc9e3f31c12d3929"
+          }
+        },
+        {
+          "client_id": "464517677256-pvcloac9loo63sq0uvtfibi0e3qut3o8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.projectairquality",
+            "certificate_hash": "3b66146ad2f0c43293ce80b311a94d34459cc12b"
           }
         },
         {
