@@ -15,7 +15,6 @@ class BeritaPages extends StatelessWidget {
       child: FutureBuilder(
         future: GetNewsApi().getNews(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          var articles = snapshot.data.articles;
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -24,6 +23,7 @@ class BeritaPages extends StatelessWidget {
             return ListView.builder(
               itemCount: 4,
               itemBuilder: (BuildContext context, int index) {
+                var articles = snapshot.data.articles;
                 return Card(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

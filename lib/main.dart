@@ -12,7 +12,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  //! Disini menggunakan GetMaterialApp karena kita menggunakan package GetX line: 12-27
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

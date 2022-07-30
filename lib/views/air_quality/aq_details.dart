@@ -3,6 +3,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:projectairquality/services/api_temperature.dart';
 import 'package:projectairquality/services/secure_storage.dart';
 
 import '../../const/const.dart';
@@ -690,107 +691,124 @@ class _AirQualityDetailsState extends State<AirQualityDetails> {
                     child: SizedBox(
                       width: Get.width / 1.1,
                       height: Get.height / 13,
-                      child: Card(
-                        shape: roundedrec,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Row(
-                              children: [
-                                Image.asset('assets/icons/udara.png'),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    SizedBox(
-                                      width: Get.width / 8,
-                                      child: Text(
-                                        'Kelembaban',
-                                        style: h1b.copyWith(fontSize: 10),
+                      child: FutureBuilder(
+                        future: ApiTemperature().getTemp(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else {
+                            var data = snapshot.data;
+                            return Card(
+                              shape: roundedrec,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Image.asset('assets/icons/udara.png'),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
-                                    const Text('100'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              height: 40,
-                              width: 3,
-                              color: Colors.grey,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Row(
-                              children: [
-                                Image.asset('assets/icons/lembab.png'),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    SizedBox(
-                                      width: Get.width / 9,
-                                      child: Text(
-                                        'Udara',
-                                        style: h1b.copyWith(fontSize: 10),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          SizedBox(
+                                            width: Get.width / 8,
+                                            child: Text(
+                                              'Kelembaban',
+                                              style: h1b.copyWith(fontSize: 10),
+                                            ),
+                                          ),
+                                          Text(data.data[1].clouds.toString()),
+                                        ],
                                       ),
-                                    ),
-                                    const Text('3.8'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              height: 40,
-                              width: 3,
-                              color: Colors.grey,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.thermostat),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    SizedBox(
-                                      width: Get.width / 8,
-                                      child: Text(
-                                        'Suhu',
-                                        style: h1b.copyWith(fontSize: 10),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 3,
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Image.asset('assets/icons/lembab.png'),
+                                      const SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
-                                    const Text('30\u2103'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          SizedBox(
+                                            width: Get.width / 9,
+                                            child: Text(
+                                              'Udara',
+                                              style: h1b.copyWith(fontSize: 10),
+                                            ),
+                                          ),
+                                          Text(data.data[1].windSpd.toString()),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 3,
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.thermostat),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          SizedBox(
+                                            width: Get.width / 8,
+                                            child: Text(
+                                              'Suhu',
+                                              style: h1b.copyWith(fontSize: 10),
+                                            ),
+                                          ),
+                                          Text(
+                                              '${data.data[1].temp.toString()}\u2103'),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ),

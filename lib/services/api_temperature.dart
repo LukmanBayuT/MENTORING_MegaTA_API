@@ -2,40 +2,32 @@
 
 import 'dart:convert';
 
-import 'package:projectairquality/model/get_temp_models.dart';
 import 'package:http/http.dart' as http;
-import 'package:projectairquality/services/secure_storage.dart';
+import 'package:projectairquality/model/api_temp_models.dart';
 
 class ApiTemperature {
-  SecureStorage secureStorage = SecureStorage();
-  Future<TemperatureModel> getTemp() async {
-    var headersList = {
-      'Accept': '*/*',
-      'User-Agent': 'Thunder Client (https://www.thunderclient.com)'
+  Future<TemperatureModels> getTemp() async {
+    var headers = {
+      'X-RapidAPI-Key': '3a416c2ceamshbf5ffb8d1964617p1fe44ajsn9ad309dab626',
+      'X-RapidAPI-Host': 'weatherbit-v1-mashape.p.rapidapi.com',
+      'useQueryString': 'true'
     };
-    var url = Uri.parse(
-        'http://api.weatherapi.com/v1/current.json?key=78f7dcf53c7347428eb80556222306&q=Surabaya&aqi=yes');
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://weatherbit-v1-mashape.p.rapidapi.com/forecast/3hourly?lat=-7.2755979&lon=112.572597&units=m'));
 
-    var req = http.Request('GET', url);
-    req.headers.addAll(headersList);
+    request.headers.addAll(headers);
 
-    var res = await req.send();
-    final resBody = await res.stream.bytesToString();
+    http.StreamedResponse response = await request.send();
+    var temperature = await response.stream.bytesToString();
+    var jsonTemp = jsonDecode(temperature);
 
-    if (res.statusCode >= 200 && res.statusCode < 300) {
-      // var jsonTemp = jsonDecode(resBody);
-      // var tempIni = jsonTemp['current']['temp_c'];
-      // var windIni = jsonTemp['current']['wind_mph'];
-      // var humidityIni = jsonTemp['current']['humidity'];
-      // await secureStorage.writeSecureData('temp', tempIni.toString());
-      // await secureStorage.writeSecureData('wind', windIni.toString());
-      // await secureStorage.writeSecureData('hum', humidityIni.toString());
-      // print(tempIni);
-      // print(windIni);
-      // print(humidityIni);
+    if (response.statusCode == 200) {
+      print(jsonTemp);
     } else {
-      print(res.reasonPhrase);
+      print(response.reasonPhrase);
     }
-    return temperatureModelFromJson(resBody);
+    return temperatureDetailsFromJson(temperature);
   }
 }

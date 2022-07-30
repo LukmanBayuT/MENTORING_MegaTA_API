@@ -24,14 +24,6 @@ class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
     super.initState();
-    ApiServicesAirQuality().fetchDataTandes();
-    ApiServicesAirQuality().fetchDataAsemworo();
-    ApiServicesAirQuality().fetchDataSukomanunggal();
-    ApiServicesAirQuality().fetchDataBenowo();
-    ApiServicesAirQuality().fetchDataLakarsantri();
-    ApiServicesAirQuality().fetchDataSambikerep();
-    ApiServicesAirQuality().fetchDataPakal();
-    ApiTemperature().getTemp();
   }
 
   int index = 1;
@@ -70,14 +62,6 @@ class _MainMenuState extends State<MainMenu> {
 
   @override
   Widget build(BuildContext context) {
-    GetNewsApi().getNews;
-    // ApiServicesAirQuality().fetchDataTandes();
-    // ApiServicesAirQuality().fetchDataAsemworo();
-    // ApiServicesAirQuality().fetchDataSukomanunggal();
-    // ApiServicesAirQuality().fetchDataBenowo();
-    // ApiServicesAirQuality().fetchDataLakarsantri();
-    // ApiServicesAirQuality().fetchDataSambikerep();
-    // ApiServicesAirQuality().fetchDataPakal();
     return Scaffold(
         body: SafeArea(
       child: Column(

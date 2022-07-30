@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,6 +19,8 @@ class LaporanKebakaranSub extends StatefulWidget {
 }
 
 class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
+  FirebaseStorage storage = FirebaseStorage.instance;
+  PlatformFile? pickedFile;
   bool isLoading = false;
 
   final deskripsi = TextEditingController();
@@ -68,9 +72,9 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                                   'Foto Kebakaran',
                                   style: h1b,
                                 ),
-                                image1 != null
+                                pickedFile != null
                                     ? GestureDetector(
-                                        onTap: _getFromCam1,
+                                        onTap: selectFile,
                                         child: Card(
                                           child: SizedBox(
                                             width: MediaQuery.of(context)
@@ -93,7 +97,8 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(20),
-                                                child: Image.file(image1!,
+                                                child: Image.file(
+                                                    File(pickedFile!.path!),
                                                     fit: BoxFit.cover),
                                               ),
                                             ),
@@ -101,7 +106,7 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                                         ),
                                       )
                                     : GestureDetector(
-                                        onTap: _getFromCam1,
+                                        onTap: selectFile,
                                         child: Card(
                                           child: SizedBox(
                                             width: MediaQuery.of(context)
@@ -255,16 +260,19 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                           height: MediaQuery.of(context).size.height / 15,
                           child: ElevatedButton(
                             onPressed: () {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              createLaporan(
-                                laporCont.text,
-                                deskripsi.text,
-                                namaTempat,
-                                alamat,
-                              ).then((value) => Timer(
-                                  const Duration(seconds: 1), goToFinish));
+                              uploadFile();
+
+                              // createLaporan(
+                              //   laporCont.text,
+                              //   deskripsi.text,
+                              //   namaTempat,
+                              //   alamat,
+                              // ).then(
+                              //   (value) => Timer(
+                              //     const Duration(seconds: 1),
+                              //     goToFinish,
+                              //   ),
+                              // );
                             },
                             child: (isLoading == true)
                                 ? const Center(
@@ -299,6 +307,38 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
     };
 
     await docLaporan.set(json);
+  }
+
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+
+    setState(() {
+      pickedFile = result.files.first;
+    });
+  }
+
+  Future uploadFile() async {
+    final path = 'files/${pickedFile!.name}';
+    final file = File(pickedFile!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
+
+  Future createLaporanImages(
+      String name, deskripsi, namaTempat, alamat, File gambar) async {
+    storage.ref('laporan').putFile(
+          gambar,
+          SettableMetadata(
+            customMetadata: {
+              'name': name,
+              'desc': deskripsi,
+              'address': namaTempat,
+              'address2': alamat,
+            },
+          ),
+        );
   }
 
   void showPlacePicker() async {

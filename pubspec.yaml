@@ -32,9 +32,11 @@ dependencies:
   cloud_firestore: ^3.1.18
   cupertino_icons: ^1.0.2
   custom_info_window: ^1.0.1
+  file_picker: ^5.0.0
   firebase_auth: ^3.3.20
   firebase_core: ^1.18.0
   firebase_messaging: ^11.4.2
+  firebase_storage: ^10.3.4
   flutter:
     sdk: flutter
   flutter_keyboard_visibility: ^5.3.0
