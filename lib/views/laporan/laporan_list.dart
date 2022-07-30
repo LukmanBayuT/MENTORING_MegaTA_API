@@ -12,6 +12,7 @@ class LaporanList extends StatefulWidget {
 }
 
 class _LaporanListState extends State<LaporanList> {
+  //! disini kita mengassign database dengan menyambungkan firebase firestore kedalam aplikasi kita pada line 27
   var db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class _LaporanListState extends State<LaporanList> {
               width: Get.width,
               height: Get.height / 1.2,
               child: StreamBuilder(
+                //! dengan menggunakan stream builder, kita assign variable db tadi kedalam stream
                 stream: db.collection('laporan').snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -34,6 +36,7 @@ class _LaporanListState extends State<LaporanList> {
                   if (snapshot.hasError) {
                     return const Text('Snapshot ada Error');
                   }
+                  //! kita buat variable _data untuk memudahkan penulisan code
                   var _data = snapshot.data!.docs;
 
                   return ListView.builder(
@@ -53,6 +56,7 @@ class _LaporanListState extends State<LaporanList> {
                                     SizedBox(
                                       height: 150,
                                       child: Image.network(
+                                        //! contoh penggunaan variable _data
                                         _data[index].data()['urlPict'] ??
                                             'https://www.freeiconspng.com/thumbs/load-icon-png/loading-icon-3.png',
                                         fit: BoxFit.cover,
@@ -94,6 +98,7 @@ class _LaporanListState extends State<LaporanList> {
               height: Get.height / 15,
               child: ElevatedButton(
                   onPressed: () {
+                    //! menggunakan navigasi getX untuk menuju ke laporan SUb
                     Get.to(() => const LaporanKebakaranSub());
                   },
                   child: Text(

@@ -11,7 +11,6 @@ import 'package:projectairquality/views/air_quality/air_quality.dart';
 import 'package:projectairquality/views/authpages.dart/auth_pages.dart';
 import 'package:projectairquality/views/berita/berita_pages.dart';
 import 'package:projectairquality/views/kelola/kelola.dart';
-import 'package:projectairquality/views/laporan/laporan_list.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -21,16 +20,15 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  //! membuat sistem navigator dengan menggunakan flutter vanilla
+  //! menggunakan sistem auth dari firebase, ada di line 31 => disini kita inject authentication kita berdasarkan apakah user sudah login atau belum.
+  //! dalam hal ini submit laporan diharuskan dengan user yang sudah ter authentukasi oleh firebase
 
   int index = 1;
   bool isBerita = false;
   bool isBeranda = true;
   bool isKelola = false;
-
+//! ini code menunjukan variable user yang kita assign dengan firebase auth
   final user = FirebaseAuth.instance.currentUser;
 
   List<Widget> items = [
@@ -351,7 +349,7 @@ class Beranda extends StatelessWidget {
                               width: 10,
                             ),
                             Text(
-                              'Laporan',
+                              'Laporan Kebakaran',
                               style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -376,63 +374,7 @@ class Beranda extends StatelessWidget {
                     fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(
-              width: Get.width,
-              height: Get.height / 4,
-              child: FutureBuilder(
-                future: GetNewsApi().getNews(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  var articles = snapshot.data.articles;
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return ListView.builder(
-                      itemCount: articles.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                    width: Get.width / 4,
-                                    child: Image.network(
-                                        articles[index].urlToImage)),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      width: Get.width * 0.6,
-                                      child: Text(articles[index].title,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                    SizedBox(
-                                      width: Get.width * 0.6,
-                                      height: Get.height / 13,
-                                      child: Text(articles[index].description,
-                                          overflow: TextOverflow.clip,
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.normal)),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
-            ),
+            const BeritaPages()
           ],
         ),
       ),

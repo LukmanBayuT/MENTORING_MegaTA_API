@@ -5,7 +5,8 @@ import 'package:projectairquality/views/main_menu.dart';
 
 class Onboarding extends StatelessWidget {
   const Onboarding({Key? key}) : super(key: key);
-
+//! semua disini hanya layout,
+//! kita menggunakan font dari googlefonts dikarenakan lebih mudah settingnya
   @override
   Widget build(BuildContext context) {
     return Scaffold(

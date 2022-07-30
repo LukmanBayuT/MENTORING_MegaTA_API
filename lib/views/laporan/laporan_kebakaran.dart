@@ -19,7 +19,9 @@ class LaporanKebakaranSub extends StatefulWidget {
 }
 
 class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
+  //! mengassign firebase storage, yang akan digunakan sebagai penampung / wadah dari picture yang akan kita upload kedalam firebase
   FirebaseStorage storage = FirebaseStorage.instance;
+  //! menggunakan package PlatformFIle untuk mengambil gambar dari storage dan uploadTask
   PlatformFile? pickedFile;
   UploadTask? uploadTask;
   bool isLoading = false;
@@ -285,6 +287,8 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
     );
   }
 
+  //! membuat widget dan fungsi untuk mempermudah pengerjaan aplikasi line 292 - 394
+
   Widget buildProgress() => StreamBuilder<TaskSnapshot>(
         stream: uploadTask?.snapshotEvents,
         builder: (context, snapshot) {
@@ -370,6 +374,7 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
     print(urlPict);
   }
 
+//! fungsi package show place picker adalah untuk mengambil posisi kita di bumi ini, dengan menggunakan key google API yang bisa dilihat di line 379
   void showPlacePicker() async {
     LocationResult? result = await Get.to(() => PlacePicker(
           "AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k",

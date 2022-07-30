@@ -8,6 +8,7 @@ class AuthPages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //! kode 13 - 22, menunjukan penggunaan stream builder dengan firebase auth. gunanaya untuk mengecheck apakah user kita sudah login atau belum, dan disini terdapat 2 kondisi 1 kondisi login berarti akan langusng dilempar ke list laporan. 2 kondisi belum login akan dilempar ke registrasi screen
     return Scaffold(
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),

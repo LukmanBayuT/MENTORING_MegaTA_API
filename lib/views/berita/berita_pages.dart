@@ -11,9 +11,9 @@ class BeritaPages extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: Get.width,
-      height: Get.height / 1.3,
+      height: Get.height / 1.18,
       child: FutureBuilder(
-        future: GetNewsApi().getNews(),
+        future: GetNewsApi().getRealNews(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -21,9 +21,9 @@ class BeritaPages extends StatelessWidget {
             );
           } else {
             return ListView.builder(
-              itemCount: 4,
+              itemCount: snapshot.data.articles.length,
               itemBuilder: (BuildContext context, int index) {
-                var articles = snapshot.data.articles;
+                var articles = snapshot.data.articles[index];
                 return Card(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -31,7 +31,7 @@ class BeritaPages extends StatelessWidget {
                       children: [
                         SizedBox(
                             width: Get.width / 4,
-                            child: Image.network(articles[index].urlToImage)),
+                            child: Image.network(articles.media)),
                         const SizedBox(
                           width: 10,
                         ),
@@ -40,7 +40,7 @@ class BeritaPages extends StatelessWidget {
                           children: [
                             SizedBox(
                               width: Get.width * 0.6,
-                              child: Text(articles[index].title,
+                              child: Text(articles.title,
                                   overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.bold)),
@@ -48,7 +48,7 @@ class BeritaPages extends StatelessWidget {
                             SizedBox(
                               width: Get.width * 0.6,
                               height: Get.height / 13,
-                              child: Text(articles[index].description,
+                              child: Text(articles.summary,
                                   overflow: TextOverflow.clip,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.normal)),

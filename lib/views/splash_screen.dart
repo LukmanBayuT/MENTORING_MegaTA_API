@@ -12,12 +12,14 @@ class SPlashScreen extends StatefulWidget {
 }
 
 class _SPlashScreenState extends State<SPlashScreen> {
+  //! membuat fungsi untuk menuju screen onboarding
   void getToOnb() {
     Get.offAll(() => const Onboarding());
   }
 
   @override
   Widget build(BuildContext context) {
+    //! menambah durasi agar terlihat lebih smooth
     Timer(const Duration(seconds: 3), getToOnb);
 
     return Scaffold(
