@@ -258,14 +258,6 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
                     child: ElevatedButton(
                       onPressed: () {
                         uploadFile();
-                        createLaporan(
-                          laporCont.text,
-                          deskripsi.text,
-                          namaTempat,
-                          alamat,
-                          urlPict,
-                        );
-                        goToFinish();
                       },
                       child: isUploaded
                           ? Text(
@@ -322,14 +314,14 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
         },
       );
 
-  Future createLaporan(String name, deskripsi, namaTempat, alamat, pict) async {
+  Future createLaporan(String name, deskripsi, namaTempat, alamat, url) async {
     final docLaporan = FirebaseFirestore.instance.collection('laporan').doc();
     final json = {
       'name': name,
       'tempat': namaTempat,
       'alamat': alamat,
       'deskripsi': deskripsi,
-      'urlPict': pict,
+      'urlPict': url,
     };
 
     await docLaporan.set(json);
@@ -362,16 +354,22 @@ class _LaporanKebakaranSubState extends State<LaporanKebakaranSub> {
     );
 
     final snapshot = await uploadTask!.whenComplete(() {});
-    debugPrint('done');
 
     final urlDownload =
         await snapshot.ref.getDownloadURL().then((value) => urlPict = value);
+    urlPict = urlDownload;
+    setState(() {});
     debugPrint('download Link : $urlDownload');
-    // setState(() {
-    //   urlPict = urlDownload;
-    // });
+    debugPrint(urlPict);
 
-    print(urlPict);
+    createLaporan(
+      laporCont.text,
+      deskripsi.text,
+      namaTempat,
+      alamat,
+      urlDownload,
+    );
+    goToFinish();
   }
 
 //! fungsi package show place picker adalah untuk mengambil posisi kita di bumi ini, dengan menggunakan key google API yang bisa dilihat di line 379
